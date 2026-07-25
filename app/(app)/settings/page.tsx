@@ -30,7 +30,7 @@ export default function SettingsPage() {
       <div className="space-y-4 p-4">
         <div className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
           <div className="flex items-center gap-4">
-            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-sky-100 text-xl font-bold text-sky-600 dark:bg-sky-950 dark:text-sky-400">
+            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-sky-500 via-sky-600 to-indigo-600 text-xl font-bold text-white shadow-md shadow-sky-500/30">
               {(me?.username || 'A')[0].toUpperCase()}
             </div>
             <div>
@@ -63,6 +63,8 @@ export default function SettingsPage() {
           className="min-h-[48px] w-full rounded-xl bg-red-50 font-semibold text-red-600 active:bg-red-100 disabled:opacity-50 dark:bg-red-950 dark:text-red-400 dark:active:bg-red-900">
           {logoutMutation.isPending ? 'Keluar…' : 'Keluar'}
         </button>
+
+        <p className="pt-2 text-center text-xs text-slate-400 dark:text-slate-500">Londri POS Superadmin · v0.1.0</p>
       </div>
     </>
   );

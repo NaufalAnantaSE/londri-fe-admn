@@ -6,7 +6,7 @@ import BottomSheet from '@/components/bottom-sheet';
 import { ordersApi } from '@/lib/api';
 import { apiMessage } from '@/lib/api/client';
 import { formatRupiah, formatTanggal } from '@/lib/utils';
-import { STATUS_BADGE, STATUS_LABEL, PAYMENT_LABEL, ORDER_FLOW } from '@/lib/labels';
+import { STATUS_BADGE, STATUS_LABEL, STATUS_DOT, PAYMENT_LABEL, ORDER_FLOW } from '@/lib/labels';
 import type { OrderStatus } from '@/lib/types';
 import { toast } from '@/hooks/useToast';
 import SkeletonList from '@/components/skeleton-list';
@@ -70,17 +70,28 @@ export default function OrderDetailPage({ params }: { params: { id: string } }) 
           </div>
         </section>
 
-        <section className="rounded-2xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm">
+        <section className="rounded-2xl border border-slate-200/60 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm">
           <h3 className="mb-4 font-semibold">Riwayat Status</h3>
-          <ol className="relative space-y-5 border-l-2 border-slate-100 dark:border-slate-800 pl-5">
-            {order.logs?.map((log) => (
-              <li key={log.id} className="relative">
-                <span className={`absolute -left-[29px] top-1 h-3.5 w-3.5 rounded-full border-2 border-white ${log.status === 'CANCELLED' ? 'bg-red-400' : 'bg-sky-500'}`} />
-                <p className="text-sm font-semibold">{STATUS_LABEL[log.status]}</p>
-                <p className="text-xs text-slate-400 dark:text-slate-500">{log.staff?.fullName} · {formatTanggal(log.createdAt, true)}</p>
-                {log.notes && <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">{log.notes}</p>}
-              </li>
-            ))}
+          <ol className="relative">
+            {(order.logs || []).map((log, i) => {
+              const isLatest = i === (order.logs?.length ?? 0) - 1;
+              const color = STATUS_DOT[log.status];
+              return (
+                <li key={log.id} className="relative pb-6 pl-8 last:pb-0">
+                  {/* garis vertikal penghubung */}
+                  {i < (order.logs?.length ?? 0) - 1 && (
+                    <span className="absolute left-[7px] top-5 h-full w-px bg-slate-200 dark:bg-slate-700" />
+                  )}
+                  <span
+                    className={`absolute left-0 top-0.5 h-4 w-4 rounded-full border-2 border-white dark:border-slate-900 ${isLatest ? 'ring-4 ring-sky-100 dark:ring-sky-950' : ''}`}
+                    style={{ backgroundColor: color }}
+                  />
+                  <p className="text-sm font-semibold">{STATUS_LABEL[log.status]}</p>
+                  <p className="text-xs text-slate-400 dark:text-slate-500">{log.staff?.fullName} · {formatTanggal(log.createdAt, true)}</p>
+                  {log.notes && <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">{log.notes}</p>}
+                </li>
+              );
+            })}
           </ol>
         </section>
       </div>
@@ -97,7 +108,7 @@ export default function OrderDetailPage({ params }: { params: { id: string } }) 
         <div className="space-y-2">
           {nextOptions.map((s) => (
             <button key={s} disabled={mutation.isPending} onClick={() => mutation.mutate({ status: s })}
-              className={`flex min-h-[48px] w-full items-center justify-between rounded-xl border px-4 text-left font-medium active:bg-slate-50 dark:bg-slate-800 dark:bg-slate-800 disabled:opacity-50 ${s === 'CANCELLED' ? 'border-red-200 text-red-600' : 'border-slate-200 dark:border-slate-700'}`}>
+              className={`flex min-h-[48px] w-full items-center justify-between rounded-xl border px-4 text-left font-medium active:bg-slate-50 dark:active:bg-slate-800 disabled:opacity-50 ${s === 'CANCELLED' ? 'border-red-200 text-red-600' : 'border-slate-200 dark:border-slate-700'}`}>
               {STATUS_LABEL[s]}
               <span className={`rounded-full px-2.5 py-1 text-[11px] font-semibold ${STATUS_BADGE[s]}`}>{s}</span>
             </button>

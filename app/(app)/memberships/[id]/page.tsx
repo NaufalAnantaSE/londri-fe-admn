@@ -33,9 +33,9 @@ export default function MembershipDetailPage({ params }: { params: { id: string 
           <div className="mt-4 grid grid-cols-2 gap-3">
             <div className="rounded-xl bg-sky-50 dark:bg-sky-950 p-3">
               <p className="text-xs text-sky-600">Saldo</p>
-              <p className="mt-0.5 font-bold text-sky-700">{formatRupiah(m.balance)}</p>
+              <p className="mt-0.5 font-bold tabular-nums text-sky-700 dark:text-sky-400">{formatRupiah(m.balance)}</p>
             </div>
-            <div className="rounded-xl bg-slate-50 dark:bg-slate-800 dark:bg-slate-800 p-3">
+            <div className="rounded-xl bg-slate-50 dark:bg-slate-800 p-3">
               <p className="text-xs text-slate-500 dark:text-slate-400">Tier</p>
               <p className="mt-0.5 font-bold">{m.tier?.name}</p>
             </div>
@@ -80,7 +80,7 @@ export default function MembershipDetailPage({ params }: { params: { id: string 
                     <p className="mt-1 text-[11px] text-slate-400 dark:text-slate-500">{formatTanggal(l.createdAt, true)}</p>
                   </div>
                 ))}
-                {!balanceLogs.data?.length && <EmptyState title="Belum ada riwayat saldo" />}
+                {!balanceLogs.data?.length && <EmptyState emoji="💳" title="Belum ada riwayat saldo" />}
               </div>
             )
           )}
@@ -98,7 +98,7 @@ export default function MembershipDetailPage({ params }: { params: { id: string 
                     <p className="mt-1 text-[11px] text-slate-400 dark:text-slate-500">{formatTanggal(t.createdAt, true)}</p>
                   </div>
                 ))}
-                {!transactions.data?.length && <EmptyState title="Belum ada transaksi" />}
+                {!transactions.data?.length && <EmptyState emoji="🧾" title="Belum ada transaksi" />}
               </div>
             )
           )}

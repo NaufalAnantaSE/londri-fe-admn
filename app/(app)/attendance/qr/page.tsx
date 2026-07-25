@@ -59,7 +59,7 @@ export default function AttendanceQrPage() {
             <p className="mt-1 text-lg font-bold">{generated.branch?.name || (branches?.items || []).find((b) => b.id === generated.branchId)?.name}</p>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={qrImage} alt="QR Presensi" className="mx-auto my-5 w-64 rounded-xl" />
-            <p className="break-all rounded-lg bg-slate-50 dark:bg-slate-800 dark:bg-slate-800 p-2 text-[11px] text-slate-400 dark:text-slate-500">{generated.qrToken}</p>
+            <p className="break-all rounded-lg bg-slate-50 dark:bg-slate-800 p-2 text-[11px] text-slate-400 dark:text-slate-500">{generated.qrToken}</p>
             <p className="mt-3 text-xs text-slate-500 dark:text-slate-400">
               Berlaku: {formatTanggal(generated.validFrom, true)} — {formatTanggal(generated.validUntil, true)}
             </p>

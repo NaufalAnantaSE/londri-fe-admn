@@ -10,6 +10,7 @@ import { membershipsApi, membershipTiersApi } from '@/lib/api';
 import { formatRupiah, formatTanggal } from '@/lib/utils';
 import type { MembershipStatus } from '@/lib/types';
 import { MEMBER_BADGE, MEMBER_LABEL } from '@/lib/labels';
+import { Crown } from '@phosphor-icons/react';
 
 export default function MembershipsPage() {
   const [search, setSearch] = useState('');
@@ -39,32 +40,34 @@ export default function MembershipsPage() {
   return (
     <>
       <PageHeader title="Membership" right={
-        <button onClick={() => setFilterOpen(true)} className="flex h-10 w-10 items-center justify-center rounded-full active:bg-slate-100 dark:bg-slate-950" aria-label="Filter">
+        <button onClick={() => setFilterOpen(true)} className="flex h-10 w-10 items-center justify-center rounded-full active:bg-slate-100 dark:active:bg-slate-800" aria-label="Filter">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="h-5 w-5"><path strokeLinecap="round" d="M3 6h18M7 12h10m-7 6h4" /></svg>
         </button>
       } />
       <div className="sticky top-[56px] z-30 bg-white dark:bg-slate-900 px-4 py-2">
         <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Cari nama / telepon…"
-          className="min-h-[44px] w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 dark:bg-slate-800 px-4 text-sm outline-none focus:border-sky-400 dark:focus:border-sky-600" />
+          className="min-h-[44px] w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-4 text-sm outline-none focus:border-sky-400 dark:focus:border-sky-600" />
       </div>
       {query.isLoading ? <SkeletonList /> : (
         <div className="space-y-3 p-4">
           {(query.data?.pages || []).flatMap((p) => p.items).map((m) => (
-            <Link key={m.id} href={`/memberships/${m.id}`} className="block rounded-2xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm active:bg-slate-50 dark:bg-slate-800 dark:bg-slate-800">
+            <Link key={m.id} href={`/memberships/${m.id}`} className="block rounded-2xl border border-slate-200/60 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm transition-transform duration-150 active:scale-[0.98]">
               <div className="flex items-start justify-between gap-2">
                 <div>
                   <p className="font-semibold">{m.customerName}</p>
-                  <p className="mt-0.5 text-sm text-slate-500 dark:text-slate-400">{m.phoneNumber} · {m.tier?.name}</p>
+                  <p className="mt-0.5 flex items-center gap-1 text-sm text-slate-500 dark:text-slate-400">
+                    {m.phoneNumber} · <Crown size={13} weight="fill" className="text-amber-500" />{m.tier?.name}
+                  </p>
                 </div>
                 <span className={`shrink-0 rounded-full px-2.5 py-1 text-[11px] font-semibold ${MEMBER_BADGE[m.status]}`}>{MEMBER_LABEL[m.status]}</span>
               </div>
               <div className="mt-3 flex items-center justify-between text-sm">
                 <span className="text-slate-400 dark:text-slate-500">Exp {formatTanggal(m.expiresAt)}</span>
-                <span className="font-bold text-sky-600">{formatRupiah(m.balance)}</span>
+                <span className="font-semibold tabular-nums text-sky-600 dark:text-sky-400">{formatRupiah(m.balance)}</span>
               </div>
             </Link>
           ))}
-          {!(query.data?.pages[0]?.items?.length) && <EmptyState title="Belum ada member" />}
+          {!(query.data?.pages[0]?.items?.length) && <EmptyState emoji="👑" title="Belum ada member" />}
           <div ref={sentinel} className="h-4" />
           {query.isFetchingNextPage && <p className="py-2 text-center text-xs text-slate-400 dark:text-slate-500">Memuat…</p>}
         </div>
@@ -76,7 +79,7 @@ export default function MembershipsPage() {
             <div className="flex gap-2">
               {(['ACTIVE', 'EXPIRED', 'BLOCKED'] as MembershipStatus[]).map((s) => (
                 <button key={s} onClick={() => setStatus(status === s ? undefined : s)}
-                  className={`min-h-[36px] flex-1 rounded-full text-xs font-medium ${status === s ? 'bg-sky-500 text-white' : 'bg-slate-100 dark:bg-slate-950 text-slate-600 dark:text-slate-300'}`}>
+                  className={`min-h-[36px] flex-1 rounded-full text-xs font-medium ${status === s ? 'bg-gradient-to-r from-sky-500 via-sky-600 to-indigo-600 text-white shadow-sm shadow-sky-500/30' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'}`}>
                   {MEMBER_LABEL[s]}
                 </button>
               ))}

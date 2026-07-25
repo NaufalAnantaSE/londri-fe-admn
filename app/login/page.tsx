@@ -5,12 +5,14 @@ import { useMutation } from '@tanstack/react-query';
 import { authApi } from '@/lib/api';
 import { apiMessage } from '@/lib/api/client';
 import { useAuth } from '@/lib/auth';
+import { WashingMachine, User, LockKey, Eye, EyeSlash, CircleNotch } from '@phosphor-icons/react';
 
 export default function LoginPage() {
   const router = useRouter();
   const { login } = useAuth();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
 
   const mutation = useMutation({
@@ -19,30 +21,51 @@ export default function LoginPage() {
     onError: (e) => setError(apiMessage(e)),
   });
 
+  const inputCls = 'min-h-[48px] w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 pl-11 pr-4 outline-none focus:border-sky-400 dark:focus:border-sky-600';
+
   return (
-    <div className="flex min-h-[100dvh] flex-col justify-center px-8 safe-top">
-      <div className="mb-8">
-        <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-sky-500 text-2xl font-bold text-white">L</div>
-        <h1 className="text-2xl font-bold">Londri POS</h1>
-        <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">Masuk sebagai Superadmin</p>
+    <div className="min-h-[100dvh]">
+      {/* Panel gradient brand ~35vh dengan gelembung dekoratif */}
+      <div className="relative flex h-[35vh] min-h-[240px] flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-sky-500 to-indigo-600 safe-top">
+        <div className="absolute -left-10 -top-10 h-40 w-40 rounded-full bg-white/10 blur-2xl" />
+        <div className="absolute -bottom-14 right-6 h-48 w-48 rounded-full bg-white/10 blur-2xl" />
+        <div className="absolute right-16 top-8 h-20 w-20 rounded-full bg-white/10 blur-xl" />
+        <WashingMachine size={64} weight="duotone" className="text-white" />
+        <h1 className="mt-3 text-2xl font-bold text-white">Londri POS</h1>
+        <p className="mt-1 text-sm text-white/80">Masuk sebagai Superadmin</p>
       </div>
-      <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); setError(''); mutation.mutate(); }}>
-        {error && <div className="rounded-xl bg-red-50 dark:bg-red-950 px-4 py-3 text-sm text-red-600">{error}</div>}
-        <div>
-          <label className="mb-1.5 block text-sm font-medium">Username</label>
-          <input value={username} onChange={(e) => setUsername(e.target.value)} required autoComplete="username"
-            className="min-h-[48px] w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 px-4 outline-none focus:border-sky-400 dark:focus:border-sky-600" placeholder="admin" />
-        </div>
-        <div>
-          <label className="mb-1.5 block text-sm font-medium">Password</label>
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required autoComplete="current-password"
-            className="min-h-[48px] w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 px-4 outline-none focus:border-sky-400 dark:focus:border-sky-600" placeholder="••••••••" />
-        </div>
-        <button type="submit" disabled={mutation.isPending}
-          className="min-h-[48px] w-full rounded-xl bg-sky-500 font-semibold text-white active:bg-sky-600 disabled:opacity-50">
-          {mutation.isPending ? 'Masuk…' : 'Masuk'}
-        </button>
-      </form>
+
+      {/* Card form menumpuk overlap ke panel gradient */}
+      <div className="relative z-10 -mt-8 rounded-3xl bg-white dark:bg-slate-900 px-6 pb-10 pt-8 shadow-lg">
+        <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); setError(''); mutation.mutate(); }}>
+          {error && <div className="rounded-xl bg-red-50 dark:bg-red-950 px-4 py-3 text-sm text-red-600 dark:text-red-400">{error}</div>}
+          <div>
+            <label className="mb-1.5 block text-sm font-medium">Username</label>
+            <div className="relative">
+              <User size={20} className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+              <input value={username} onChange={(e) => setUsername(e.target.value)} required autoComplete="username"
+                className={inputCls} placeholder="admin" />
+            </div>
+          </div>
+          <div>
+            <label className="mb-1.5 block text-sm font-medium">Password</label>
+            <div className="relative">
+              <LockKey size={20} className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+              <input type={showPassword ? 'text' : 'password'} value={password} onChange={(e) => setPassword(e.target.value)}
+                required autoComplete="current-password"
+                className={inputCls + ' pr-11'} placeholder="••••••••" />
+              <button type="button" onClick={() => setShowPassword(!showPassword)} aria-label="Tampilkan password"
+                className="absolute right-1.5 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full text-slate-400 active:bg-slate-100 dark:active:bg-slate-800">
+                {showPassword ? <EyeSlash size={20} /> : <Eye size={20} />}
+              </button>
+            </div>
+          </div>
+          <button type="submit" disabled={mutation.isPending}
+            className="flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-sky-500 via-sky-600 to-indigo-600 font-semibold text-white shadow-lg shadow-sky-500/30 transition-transform duration-150 active:scale-[0.98] disabled:opacity-60">
+            {mutation.isPending ? (<><CircleNotch size={20} className="animate-spin" /> Masuk…</>) : 'Masuk'}
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

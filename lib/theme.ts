@@ -20,7 +20,10 @@ function resolve(theme: Theme): 'light' | 'dark' {
 
 function apply(resolved: 'light' | 'dark') {
   if (typeof document === 'undefined') return;
-  document.documentElement.classList.toggle('dark', resolved === 'dark');
+  const el = document.documentElement;
+  el.classList.add('theme-transition');
+  el.classList.toggle('dark', resolved === 'dark');
+  setTimeout(() => el.classList.remove('theme-transition'), 300);
 }
 
 export const useTheme = create<ThemeState>((set, get) => ({

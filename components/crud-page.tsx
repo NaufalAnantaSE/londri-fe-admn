@@ -91,7 +91,7 @@ export default function CrudPage<T extends { id: string }>(props: CrudPageProps<
       <PageHeader title={props.title} back />
       <div className="sticky top-[56px] z-30 bg-white dark:bg-slate-900 px-4 py-2">
         <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder={props.searchPlaceholder || 'Cari…'}
-          className="min-h-[44px] w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 dark:bg-slate-800 px-4 text-sm outline-none focus:border-sky-400 dark:focus:border-sky-600" />
+          className="min-h-[44px] w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-4 text-sm outline-none focus:border-sky-400 dark:focus:border-sky-600" />
       </div>
       {listQuery.isLoading ? <SkeletonList /> : items.length ? (
         <div className="space-y-3 p-4">
@@ -101,7 +101,7 @@ export default function CrudPage<T extends { id: string }>(props: CrudPageProps<
             </div>
           ))}
         </div>
-      ) : <EmptyState title={`Belum ada ${props.title.toLowerCase()}`} description="Tekan tombol + untuk menambah" />}
+      ) : <EmptyState emoji="📦" title={`Belum ada ${props.title.toLowerCase()}`} description="Tekan tombol + untuk menambah" />}
 
       <Fab onClick={openCreate} />
 

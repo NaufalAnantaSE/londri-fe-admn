@@ -43,22 +43,22 @@ export default function AttendancePage() {
       } />
       <div className="space-y-2 bg-white dark:bg-slate-900 px-4 py-3">
         <div className="grid grid-cols-2 gap-2">
-          <select value={branchId} onChange={(e) => setBranchId(e.target.value)} className="min-h-[44px] rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 dark:bg-slate-800 px-3 text-sm">
+          <select value={branchId} onChange={(e) => setBranchId(e.target.value)} className="min-h-[44px] rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-3 text-sm">
             <option value="">Semua cabang</option>
             {(branches?.items || []).map((b) => <option key={b.id} value={b.id}>{b.name}</option>)}
           </select>
-          <select value={staffId} onChange={(e) => setStaffId(e.target.value)} className="min-h-[44px] rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 dark:bg-slate-800 px-3 text-sm">
+          <select value={staffId} onChange={(e) => setStaffId(e.target.value)} className="min-h-[44px] rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-3 text-sm">
             <option value="">Semua staff</option>
             {(staffs?.items || []).map((s) => <option key={s.id} value={s.id}>{s.fullName}</option>)}
           </select>
         </div>
         <div className="grid grid-cols-2 gap-2">
-          <select value={type} onChange={(e) => setType(e.target.value as AttendanceType | '')} className="min-h-[44px] rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 dark:bg-slate-800 px-3 text-sm">
+          <select value={type} onChange={(e) => setType(e.target.value as AttendanceType | '')} className="min-h-[44px] rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-3 text-sm">
             <option value="">Semua tipe</option>
             <option value="CHECK_IN">Check-in</option>
             <option value="CHECK_OUT">Check-out</option>
           </select>
-          <input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="min-h-[44px] rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 dark:bg-slate-800 px-3 text-sm" />
+          <input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="min-h-[44px] rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-3 text-sm" />
         </div>
       </div>
       {query.isLoading ? <SkeletonList /> : (
@@ -75,7 +75,7 @@ export default function AttendancePage() {
               <p className="text-xs text-slate-500 dark:text-slate-400">{formatTanggal(a.scannedAt, true)}</p>
             </div>
           ))}
-          {!(query.data?.pages[0]?.items?.length) && <EmptyState title="Belum ada presensi" />}
+          {!(query.data?.pages[0]?.items?.length) && <EmptyState emoji="📋" title="Belum ada presensi" />}
           <div ref={sentinel} className="h-4" />
         </div>
       )}
