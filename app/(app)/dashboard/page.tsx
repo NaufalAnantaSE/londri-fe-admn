@@ -5,6 +5,7 @@ import { formatRupiah, formatBulan } from '@/lib/utils';
 import PageHeader from '@/components/page-header';
 import SkeletonList from '@/components/skeleton-list';
 import { useTheme } from '@/lib/theme';
+import { TrendUp, CalendarCheck, ListChecks, Users } from '@phosphor-icons/react';
 import dynamic from 'next/dynamic';
 
 // Dynamic import Recharts — huge chunk (~100KB), only needed on this page
@@ -33,10 +34,10 @@ export default function DashboardPage() {
   if (summary.isLoading) return <><PageHeader title="Dashboard" /><SkeletonList count={5} /></>;
   const d = summary.data;
   const cards = [
-    { label: 'Revenue hari ini', value: formatRupiah(d?.revenue.daily.amount), icon: '↗', color: 'bg-sky-50 dark:bg-sky-950 text-sky-600 dark:text-sky-400' },
-    { label: 'Revenue bulan ini', value: formatRupiah(d?.revenue.monthly.amount), icon: '◉', color: 'bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400' },
-    { label: 'Total order', value: d?.summary.totalOrders ?? 0, icon: '▣', color: 'bg-amber-50 dark:bg-amber-950 text-amber-600 dark:text-amber-400' },
-    { label: 'Member aktif', value: d?.summary.activeMemberships ?? 0, icon: '♙', color: 'bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400' },
+    { label: 'Revenue hari ini', value: formatRupiah(d?.revenue.daily.amount), Icon: TrendUp, color: 'bg-sky-50 dark:bg-sky-950 text-sky-600 dark:text-sky-400' },
+    { label: 'Revenue bulan ini', value: formatRupiah(d?.revenue.monthly.amount), Icon: CalendarCheck, color: 'bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400' },
+    { label: 'Total order', value: d?.summary.totalOrders ?? 0, Icon: ListChecks, color: 'bg-amber-50 dark:bg-amber-950 text-amber-600 dark:text-amber-400' },
+    { label: 'Member aktif', value: d?.summary.activeMemberships ?? 0, Icon: Users, color: 'bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400' },
   ];
   const chartData = [...(months.data || [])].reverse().map((x) => ({ name: formatBulan(x.month), revenue: Number(x.totalRevenue) }));
   const tickColor = isDark ? '#94a3b8' : '#94a3b8';
@@ -49,7 +50,7 @@ export default function DashboardPage() {
       <div className="space-y-5 p-4">
         <div className="grid grid-cols-2 gap-3">
           {cards.map((c) => <div key={c.label} className="rounded-2xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm">
-            <div className={`mb-3 flex h-9 w-9 items-center justify-center rounded-xl text-lg ${c.color}`}>{c.icon}</div>
+            <div className={`mb-3 flex h-9 w-9 items-center justify-center rounded-xl ${c.color}`}><c.Icon size={18} weight="duotone" /></div>
             <p className="text-xs text-slate-500 dark:text-slate-400">{c.label}</p><p className="mt-1 text-lg font-bold">{c.value}</p>
           </div>)}
         </div>

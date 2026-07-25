@@ -5,12 +5,13 @@ import PageHeader from '@/components/page-header';
 import { authApi } from '@/lib/api';
 import { useAuth } from '@/lib/auth';
 import { useTheme } from '@/lib/theme';
+import { Sun, Moon, GearSix } from '@phosphor-icons/react';
 import { toast } from '@/hooks/useToast';
 
 const THEME_OPTIONS = [
-  { value: 'light' as const, label: 'Terang', icon: '☀️' },
-  { value: 'dark' as const, label: 'Gelap', icon: '🌙' },
-  { value: 'system' as const, label: 'Ikuti Sistem', icon: '⚙️' },
+  { value: 'light' as const, label: 'Terang', Icon: Sun },
+  { value: 'dark' as const, label: 'Gelap', Icon: Moon },
+  { value: 'system' as const, label: 'Ikuti Sistem', Icon: GearSix },
 ];
 
 export default function SettingsPage() {
@@ -49,7 +50,7 @@ export default function SettingsPage() {
                     ? 'border-sky-500 bg-sky-50 dark:border-sky-500 dark:bg-sky-950'
                     : 'border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800'
                 }`}>
-                <span className="text-2xl">{opt.icon}</span>
+                <opt.Icon size={24} weight="duotone" />
                 <span className={`text-xs font-medium ${
                   theme === opt.value ? 'text-sky-600 dark:text-sky-400' : 'text-slate-600 dark:text-slate-400'
                 }`}>{opt.label}</span>

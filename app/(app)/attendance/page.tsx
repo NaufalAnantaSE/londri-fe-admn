@@ -8,6 +8,7 @@ import EmptyState from '@/components/empty-state';
 import { attendanceApi, branchesApi, staffsApi } from '@/lib/api';
 import { formatTanggal } from '@/lib/utils';
 import type { AttendanceType } from '@/lib/types';
+import { SignIn, SignOut } from '@phosphor-icons/react';
 import { useRef } from 'react';
 
 export default function AttendancePage() {
@@ -65,7 +66,7 @@ export default function AttendancePage() {
           {(query.data?.pages || []).flatMap((p) => p.items).map((a) => (
             <div key={a.id} className="flex items-center gap-3 rounded-2xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm">
               <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-lg ${a.attendanceType === 'CHECK_IN' ? 'bg-emerald-50 dark:bg-emerald-950 text-emerald-600' : 'bg-amber-50 dark:bg-amber-950 text-amber-600'}`}>
-                {a.attendanceType === 'CHECK_IN' ? '→' : '←'}
+                {a.attendanceType === 'CHECK_IN' ? <SignIn size={20} weight='bold' /> : <SignOut size={20} weight='bold' />}
               </div>
               <div className="flex-1">
                 <p className="font-semibold">{a.staff?.fullName}</p>
