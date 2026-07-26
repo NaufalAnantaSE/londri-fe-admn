@@ -27,7 +27,7 @@ export default function MembershipTiersPage() {
       toPayload={(f) => ({ name: f.name, purchasePrice: Number(f.purchasePrice), balanceAmount: Number(f.balanceAmount), validityDays: Number(f.validityDays), description: f.description || null })}
       fromItem={(t) => ({ name: t.name, purchasePrice: t.purchasePrice, balanceAmount: t.balanceAmount, validityDays: String(t.validityDays), description: t.description || '' })}
       renderCard={(t, { edit, remove }) => (
-        <div className="flex items-start justify-between gap-2 rounded-2xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm">
+        <div className="flex items-start justify-between gap-2 rounded-2xl border border-slate-100 dark:border-slate-800 glass p-4 shadow-sm">
           <div>
             <p className="font-semibold">{t.name}</p>
             <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">Beli {formatRupiah(t.purchasePrice)} → saldo {formatRupiah(t.balanceAmount)}</p>

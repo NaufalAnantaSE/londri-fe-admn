@@ -2,7 +2,7 @@ export default function SkeletonList({ count = 4 }: { count?: number }) {
   return (
     <div className="space-y-3 p-4">
       {Array.from({ length: count }).map((_, i) => (
-        <div key={i} className="animate-pulse rounded-2xl border border-slate-200/60 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm">
+        <div key={i} className="animate-pulse rounded-2xl border border-slate-200/60 dark:border-slate-800 glass p-4 shadow-sm">
           <div className="flex items-start justify-between gap-2">
             <div className="flex-1">
               <div className="h-4 w-1/3 rounded bg-slate-200 dark:bg-slate-700" />

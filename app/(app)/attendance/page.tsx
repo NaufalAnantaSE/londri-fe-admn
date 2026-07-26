@@ -41,7 +41,7 @@ export default function AttendancePage() {
           + QR
         </Link>
       } />
-      <div className="space-y-2 bg-white dark:bg-slate-900 px-4 py-3">
+      <div className="glass-strong space-y-2 px-4 py-3">
         <div className="grid grid-cols-2 gap-2">
           <select value={branchId} onChange={(e) => setBranchId(e.target.value)} className="min-h-[44px] rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-3 text-sm">
             <option value="">Semua cabang</option>
@@ -64,7 +64,7 @@ export default function AttendancePage() {
       {query.isLoading ? <SkeletonList /> : (
         <div className="space-y-2 p-4">
           {(query.data?.pages || []).flatMap((p) => p.items).map((a) => (
-            <div key={a.id} className="flex items-center gap-3 rounded-2xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm">
+            <div key={a.id} className="flex items-center gap-3 rounded-2xl border border-slate-100 dark:border-slate-800 glass p-4 shadow-sm">
               <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-lg ${a.attendanceType === 'CHECK_IN' ? 'bg-emerald-50 dark:bg-emerald-950 text-emerald-600' : 'bg-amber-50 dark:bg-amber-950 text-amber-600'}`}>
                 {a.attendanceType === 'CHECK_IN' ? <SignIn size={20} weight='bold' /> : <SignOut size={20} weight='bold' />}
               </div>

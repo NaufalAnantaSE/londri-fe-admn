@@ -35,7 +35,7 @@ export default function OrderDetailPage({ params }: { params: { id: string } }) 
     <>
       <PageHeader title={order.invoiceNumber} back />
       <div className="space-y-4 p-4 pb-28">
-        <section className="rounded-2xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm">
+        <section className="rounded-2xl border border-slate-100 dark:border-slate-800 glass p-4 shadow-sm">
           <div className="flex items-start justify-between">
             <div>
               <p className="text-lg font-bold">{order.customerName}</p>
@@ -52,7 +52,7 @@ export default function OrderDetailPage({ params }: { params: { id: string } }) 
           </div>
         </section>
 
-        <section className="rounded-2xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm">
+        <section className="rounded-2xl border border-slate-100 dark:border-slate-800 glass p-4 shadow-sm">
           <h3 className="mb-3 font-semibold">Item Layanan</h3>
           <div className="space-y-2">
             {order.items?.map((it) => (
@@ -70,7 +70,7 @@ export default function OrderDetailPage({ params }: { params: { id: string } }) 
           </div>
         </section>
 
-        <section className="rounded-2xl border border-slate-200/60 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm">
+        <section className="rounded-2xl border border-slate-200/60 dark:border-slate-800 glass p-4 shadow-sm">
           <h3 className="mb-4 font-semibold">Riwayat Status</h3>
           <ol className="relative">
             {(order.logs || []).map((log, i) => {
@@ -97,7 +97,7 @@ export default function OrderDetailPage({ params }: { params: { id: string } }) 
       </div>
 
       {!isTerminal && nextOptions.length > 0 && (
-        <div className="fixed inset-x-0 bottom-16 z-40 mx-auto max-w-md bg-white dark:bg-slate-900/95 p-4 backdrop-blur safe-bottom">
+        <div className="glass-strong fixed inset-x-0 bottom-16 z-40 mx-auto max-w-md p-4 safe-bottom">
           <button onClick={() => setSheet(true)} className="min-h-[48px] w-full rounded-xl bg-sky-500 font-semibold text-white active:bg-sky-600">
             Ubah Status
           </button>

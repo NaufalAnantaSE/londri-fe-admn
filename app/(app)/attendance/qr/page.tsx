@@ -37,7 +37,7 @@ export default function AttendanceQrPage() {
     <>
       <PageHeader title="QR Presensi" back />
       <div className="space-y-5 p-4">
-        <section className="space-y-4 rounded-2xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm">
+        <section className="space-y-4 rounded-2xl border border-slate-100 dark:border-slate-800 glass p-5 shadow-sm">
           <Field label="Cabang">
             <select value={branchId} onChange={(e) => setBranchId(e.target.value)} className={inputCls}>
               <option value="">— Pilih cabang —</option>
@@ -54,7 +54,7 @@ export default function AttendanceQrPage() {
         </section>
 
         {generated && qrImage && (
-          <section className="rounded-2xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 text-center shadow-sm">
+          <section className="rounded-2xl border border-slate-100 dark:border-slate-800 glass p-6 text-center shadow-sm">
             <p className="text-sm text-slate-500 dark:text-slate-400">Scan QR ini untuk presensi di</p>
             <p className="mt-1 text-lg font-bold">{generated.branch?.name || (branches?.items || []).find((b) => b.id === generated.branchId)?.name}</p>
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -70,7 +70,7 @@ export default function AttendanceQrPage() {
           <h2 className="mb-3 font-semibold">QR Aktif Sebelumnya</h2>
           <div className="space-y-2">
             {qrCodes?.map((qr) => (
-              <div key={qr.id} className="rounded-xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm">
+              <div key={qr.id} className="rounded-xl border border-slate-100 dark:border-slate-800 glass p-4 shadow-sm">
                 <p className="font-medium">{qr.branch?.name}</p>
                 <p className="mt-1 text-xs text-slate-400 dark:text-slate-500">
                   {formatTanggal(qr.validFrom, true)} — {formatTanggal(qr.validUntil, true)}

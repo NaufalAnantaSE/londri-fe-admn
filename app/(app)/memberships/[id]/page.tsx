@@ -23,7 +23,7 @@ export default function MembershipDetailPage({ params }: { params: { id: string 
     <>
       <PageHeader title={m.customerName} back />
       <div className="p-4">
-        <section className="rounded-2xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm">
+        <section className="rounded-2xl border border-slate-100 dark:border-slate-800 glass p-5 shadow-sm">
           <div className="flex items-start justify-between">
             <div>
               <p className="text-lg font-bold">{m.customerName}</p>
@@ -47,7 +47,7 @@ export default function MembershipDetailPage({ params }: { params: { id: string 
         <div className="mt-4 grid grid-cols-3 rounded-xl bg-slate-100 dark:bg-slate-950 p-1">
           {(['info', 'balance', 'transaksi'] as Tab[]).map((t) => (
             <button key={t} onClick={() => setTab(t)}
-              className={`min-h-[40px] rounded-lg text-sm font-medium ${tab === t ? 'bg-white dark:bg-slate-900 shadow-sm' : 'text-slate-500 dark:text-slate-400'}`}>
+              className={`min-h-[40px] rounded-lg text-sm font-medium ${tab === t ? 'bg-white dark:bg-slate-800 shadow-sm' : 'text-slate-500 dark:text-slate-400'}`}>
               {t === 'info' ? 'Info' : t === 'balance' ? 'Saldo' : 'Transaksi'}
             </button>
           ))}
@@ -55,7 +55,7 @@ export default function MembershipDetailPage({ params }: { params: { id: string 
 
         <div className="mt-4">
           {tab === 'info' && (
-            <section className="space-y-2 rounded-2xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 text-sm shadow-sm">
+            <section className="space-y-2 rounded-2xl border border-slate-100 dark:border-slate-800 glass p-5 text-sm shadow-sm">
               <p><span className="text-slate-400 dark:text-slate-500">Nama:</span> {m.customerName}</p>
               <p><span className="text-slate-400 dark:text-slate-500">Telepon:</span> {m.phoneNumber}</p>
               <p><span className="text-slate-400 dark:text-slate-500">Alamat:</span> {m.address || '—'}</p>
@@ -67,7 +67,7 @@ export default function MembershipDetailPage({ params }: { params: { id: string 
             balanceLogs.isLoading ? <SkeletonList count={3} /> : (
               <div className="space-y-2">
                 {balanceLogs.data?.map((l) => (
-                  <div key={l.id} className="rounded-xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm">
+                  <div key={l.id} className="rounded-xl border border-slate-100 dark:border-slate-800 glass p-4 shadow-sm">
                     <div className="flex items-center justify-between">
                       <span className={`rounded-full px-2 py-0.5 text-[11px] font-bold ${l.type === 'USAGE' ? 'bg-red-50 dark:bg-red-950 text-red-600' : l.type === 'REFUND' ? 'bg-emerald-50 dark:bg-emerald-950 text-emerald-600' : 'bg-slate-100 dark:bg-slate-950 text-slate-600 dark:text-slate-300'}`}>
                         {l.type === 'USAGE' ? 'Pemakaian' : l.type === 'REFUND' ? 'Refund' : 'Penyesuaian'}
@@ -89,7 +89,7 @@ export default function MembershipDetailPage({ params }: { params: { id: string 
             transactions.isLoading ? <SkeletonList count={3} /> : (
               <div className="space-y-2">
                 {transactions.data?.map((t) => (
-                  <div key={t.id} className="rounded-xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm">
+                  <div key={t.id} className="rounded-xl border border-slate-100 dark:border-slate-800 glass p-4 shadow-sm">
                     <div className="flex items-center justify-between">
                       <p className="font-semibold">{t.currentTier?.name}</p>
                       <b>{formatRupiah(t.purchasePrice)}</b>

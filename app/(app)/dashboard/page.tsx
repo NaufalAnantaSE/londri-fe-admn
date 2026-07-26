@@ -84,14 +84,14 @@ export default function DashboardPage() {
 
         {/* Tiga metrik kecil */}
         <div className="grid grid-cols-3 gap-3">
-          {smallCards.map((c) => <div key={c.label} className="rounded-2xl border border-slate-200/60 dark:border-slate-800 bg-white dark:bg-slate-900 p-3.5 shadow-sm">
+          {smallCards.map((c) => <div key={c.label} className="rounded-2xl border border-slate-200/60 dark:border-slate-800 glass p-3.5 shadow-sm">
             <div className={`mb-2.5 flex h-8 w-8 items-center justify-center rounded-xl ${c.color}`}><c.Icon size={16} weight="duotone" /></div>
             <p className="text-[11px] text-slate-500 dark:text-slate-400">{c.label}</p>
             <p className="mt-0.5 truncate text-sm font-bold tabular-nums">{c.value}</p>
           </div>)}
         </div>
 
-        <section className="rounded-2xl border border-slate-200/60 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm">
+        <section className="rounded-2xl border border-slate-200/60 dark:border-slate-800 glass p-4 shadow-sm">
           <h2 className="mb-4 font-semibold">Revenue per bulan</h2>
           {chartData.length ? (
             <ResponsiveContainer width="100%" height={210}>
@@ -113,7 +113,7 @@ export default function DashboardPage() {
           ) : <p className="py-12 text-center text-sm text-slate-400">Belum ada data revenue</p>}
         </section>
 
-        <section className="rounded-2xl border border-slate-200/60 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm">
+        <section className="rounded-2xl border border-slate-200/60 dark:border-slate-800 glass p-4 shadow-sm">
           <h2 className="mb-4 font-semibold">Revenue per kasir</h2>
           <div className="space-y-3.5">
             {(cashiers.data || []).slice(0, 5).map((x, i) => (
@@ -132,7 +132,7 @@ export default function DashboardPage() {
           </div>
         </section>
 
-        <section className="rounded-2xl border border-slate-200/60 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm">
+        <section className="rounded-2xl border border-slate-200/60 dark:border-slate-800 glass p-4 shadow-sm">
           <h2 className="mb-3 font-semibold">Penjualan membership</h2>
           <div className="flex items-center gap-4">
             <div className="relative h-36 w-36 shrink-0">
@@ -166,7 +166,7 @@ export default function DashboardPage() {
           </div>
         </section>
 
-        <section className="rounded-2xl border border-slate-200/60 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm">
+        <section className="rounded-2xl border border-slate-200/60 dark:border-slate-800 glass p-4 shadow-sm">
           <h2 className="mb-4 font-semibold">Promo terpopuler</h2>
           <div className="space-y-3">{(promos.data || []).slice(0, 5).map((p) => <div key={p.code} className="flex items-center justify-between"><div><span className="rounded-full bg-sky-50 dark:bg-sky-950 px-2 py-1 text-xs font-bold text-sky-600 dark:text-sky-400">{p.code}</span><span className="ml-2 text-sm">{p.name}</span></div><b className="text-sm tabular-nums">{p.usage_count}×</b></div>)}{!promos.data?.length && <p className="text-sm text-slate-400">Belum ada promo digunakan</p>}</div>
         </section>

@@ -22,7 +22,7 @@ export default function BranchesPage() {
       }}
       fromItem={(b) => ({ name: b.name, address: b.address, phoneNumber: b.phoneNumber })}
       renderCard={(b, { edit, remove }) => (
-        <div className="rounded-2xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm">
+        <div className="rounded-2xl border border-slate-100 dark:border-slate-800 glass p-4 shadow-sm">
           <div className="flex items-start justify-between gap-2">
             <div>
               <p className="font-semibold">{b.name}</p>

@@ -91,7 +91,7 @@ export default function CrudPage<T extends { id: string }>(props: CrudPageProps<
   return (
     <>
       <PageHeader title={props.title} back />
-      <div className="sticky top-[56px] z-30 bg-white dark:bg-slate-900 px-4 py-2">
+      <div className="glass-strong sticky top-[56px] z-30 px-4 py-2">
         <SearchInput value={search} onChange={setSearch} placeholder={props.searchPlaceholder || 'Cari…'} />
       </div>
       {listQuery.isLoading ? <SkeletonList /> : items.length ? (

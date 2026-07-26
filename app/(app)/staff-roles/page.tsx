@@ -15,7 +15,7 @@ export default function StaffRolesPage() {
       validate={(f): Record<string, string> => (!f.name ? { name: 'Nama wajib diisi' } : {})}
       fromItem={(r) => ({ name: r.name, description: r.description || '' })}
       renderCard={(r, { edit, remove }) => (
-        <div className="flex items-start justify-between gap-2 rounded-2xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm">
+        <div className="flex items-start justify-between gap-2 rounded-2xl border border-slate-100 dark:border-slate-800 glass p-4 shadow-sm">
           <div>
             <p className="font-semibold">{r.name}</p>
             <p className="mt-1 text-sm text-slate-400 dark:text-slate-500">{r.description || '—'}</p>

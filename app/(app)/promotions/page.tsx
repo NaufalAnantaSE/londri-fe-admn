@@ -43,7 +43,7 @@ export default function PromotionsPage() {
         startDate: p.startDate.slice(0, 10), endDate: p.endDate.slice(0, 10), isActive: p.isActive,
       })}
       renderCard={(p, { edit, remove }) => (
-        <div className="flex items-start justify-between gap-2 rounded-2xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm">
+        <div className="flex items-start justify-between gap-2 rounded-2xl border border-slate-100 dark:border-slate-800 glass p-4 shadow-sm">
           <div>
             <div className="flex items-center gap-2">
               <span className="rounded-md bg-sky-50 dark:bg-sky-950 px-2 py-1 text-xs font-bold text-sky-600">{p.code}</span>

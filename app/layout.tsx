@@ -51,7 +51,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className={`${jakarta.variable} ${spaceGrotesk.variable} font-sans bg-slate-100 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased`}>
         <Providers>
-          <div className="mx-auto min-h-[100dvh] max-w-md overflow-x-clip bg-white dark:bg-slate-900 shadow-sm">{children}</div>
+          <div className="relative mx-auto min-h-[100dvh] max-w-md overflow-x-clip bg-slate-50/70 dark:bg-slate-950/60 shadow-sm">
+            <div className="app-ambient" aria-hidden="true" />
+            <div className="relative z-[1]">{children}</div>
+          </div>
         </Providers>
       </body>
     </html>

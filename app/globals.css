@@ -24,6 +24,58 @@ html, body {
   overflow-x: clip;
 }
 
+/* Hallmark · genre: atmospheric-glass — frosted surfaces over a low ambient backdrop.
+   Glass earns its place here: the ambient layer (.app-ambient) sits behind the
+   column so every frosted surface has colour to refract. Without a backdrop,
+   glass is decoration; with one, it communicates depth. */
+@layer components {
+  /* Ambient backdrop — two restrained blooms, fixed, no motion. This is the
+     "content behind glass" that justifies the frost. */
+  .app-ambient {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(42rem 30rem at 15% -5%, rgba(14, 165, 233, 0.22), transparent 60%),
+      radial-gradient(38rem 28rem at 100% 8%, rgba(99, 102, 241, 0.18), transparent 62%),
+      radial-gradient(34rem 26rem at 50% 108%, rgba(56, 189, 248, 0.16), transparent 60%);
+  }
+  .dark .app-ambient {
+    background:
+      radial-gradient(42rem 30rem at 15% -5%, rgba(14, 165, 233, 0.20), transparent 60%),
+      radial-gradient(38rem 28rem at 100% 8%, rgba(99, 102, 241, 0.22), transparent 62%),
+      radial-gradient(34rem 26rem at 50% 108%, rgba(56, 189, 248, 0.14), transparent 60%);
+  }
+
+  /* Frosted surface tokens. `-strong` for chrome that overlaps content
+     (header, nav, sheets); base for resting cards. */
+  .glass {
+    background-color: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+  }
+  .dark .glass {
+    background-color: rgba(15, 23, 42, 0.45);
+    border-color: rgba(148, 163, 184, 0.16);
+  }
+  .glass-strong {
+    background-color: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px) saturate(170%);
+    -webkit-backdrop-filter: blur(20px) saturate(170%);
+  }
+  .dark .glass-strong {
+    background-color: rgba(15, 23, 42, 0.6);
+  }
+}
+
+/* Graceful fallback: browsers without backdrop-filter get an opaque surface. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass, .glass-strong { background-color: rgba(255, 255, 255, 0.92); }
+  .dark .glass, .dark .glass-strong { background-color: rgba(15, 23, 42, 0.92); }
+}
+
 body {
   overscroll-behavior-y: none;
   -webkit-tap-highlight-color: transparent;

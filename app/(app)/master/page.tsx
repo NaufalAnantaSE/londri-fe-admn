@@ -20,7 +20,7 @@ export default function MasterPage() {
       <div className="space-y-3 p-4">
         {modules.map((m) => (
           <Link key={m.href} href={m.href}
-            className="flex items-center gap-4 rounded-2xl border border-slate-200/60 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm transition-transform duration-150 active:scale-[0.98]">
+            className="flex items-center gap-4 rounded-2xl border border-slate-200/60 dark:border-slate-800 glass p-4 shadow-sm transition-transform duration-150 active:scale-[0.98]">
             <div className={`flex h-11 w-11 items-center justify-center rounded-xl p-2.5 ${m.color}`}><m.Icon size={22} weight="duotone" /></div>
             <div className="flex-1">
               <p className="font-semibold">{m.label}</p>

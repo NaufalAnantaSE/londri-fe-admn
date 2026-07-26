@@ -33,10 +33,10 @@ export default function BottomSheet({ open, onClose, title, children }: {
         onClick={onClose}
       />
       <div
-        className={`absolute inset-x-0 bottom-0 max-h-[85dvh] overflow-y-auto rounded-t-3xl bg-white dark:bg-slate-900 transition-transform duration-250 ease-out safe-bottom ${visible ? 'translate-y-0' : 'translate-y-full'}`}
+        className={`glass-strong absolute inset-x-0 bottom-0 max-h-[85dvh] overflow-y-auto rounded-t-3xl transition-transform duration-250 ease-out safe-bottom ${visible ? 'translate-y-0' : 'translate-y-full'}`}
         style={{ transitionDuration: '250ms' }}
       >
-        <div className="sticky top-0 bg-white dark:bg-slate-900 px-5 pb-2 pt-3">
+        <div className="glass-strong sticky top-0 px-5 pb-2 pt-3">
           <div className="mx-auto mb-3 h-1.5 w-10 rounded-full bg-slate-300 dark:bg-slate-600" />
           {title && <h2 className="text-base font-semibold">{title}</h2>}
         </div>

@@ -58,7 +58,7 @@ export default function OrdersPage() {
           {activeCount > 0 && <span className="absolute -right-0.5 -top-0.5 flex h-5 w-5 items-center justify-center rounded-full bg-sky-500 text-[10px] font-bold text-white">{activeCount}</span>}
         </button>
       } />
-      <div className="sticky top-[56px] z-30 bg-white dark:bg-slate-900 px-4 py-2">
+      <div className="glass-strong sticky top-[56px] z-30 px-4 py-2">
         <SearchInput value={search} onChange={setSearch} placeholder="Cari invoice / pelanggan…" />
         <div className="no-scrollbar -mx-4 mt-2 flex max-w-[calc(100%+2rem)] gap-2 overflow-x-auto overscroll-x-contain px-4 pb-0.5">
           <button onClick={() => setFilters({ ...filters, status: undefined })}
@@ -77,7 +77,7 @@ export default function OrdersPage() {
       {query.isLoading ? <SkeletonList /> : (
         <div className="space-y-3 p-4">
           {(query.data?.pages || []).flatMap((p) => p.items).map((o) => (
-            <Link key={o.id} href={`/orders/${o.id}`} className="block rounded-2xl border border-slate-200/60 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm transition-transform duration-150 active:scale-[0.98]">
+            <Link key={o.id} href={`/orders/${o.id}`} className="block rounded-2xl border border-slate-200/60 dark:border-slate-800 glass p-4 shadow-sm transition-transform duration-150 active:scale-[0.98]">
               <div className="flex items-start justify-between gap-2">
                 <div>
                   <p className="text-sm font-bold">{o.invoiceNumber}</p>

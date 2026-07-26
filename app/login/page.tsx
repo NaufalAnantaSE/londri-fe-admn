@@ -36,7 +36,7 @@ export default function LoginPage() {
       </div>
 
       {/* Card form menumpuk overlap ke panel gradient */}
-      <div className="relative z-10 -mt-8 rounded-3xl bg-white dark:bg-slate-900 px-6 pb-10 pt-8 shadow-lg">
+      <div className="glass-strong relative z-10 -mt-8 rounded-3xl px-6 pb-10 pt-8 shadow-lg">
         <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); setError(''); mutation.mutate(); }}>
           {error && <div className="rounded-xl bg-red-50 dark:bg-red-950 px-4 py-3 text-sm text-red-600 dark:text-red-400">{error}</div>}
           <div>
