@@ -51,14 +51,27 @@ html, body {
   /* Frosted surface tokens. `-strong` for chrome that overlaps content
      (header, nav, sheets); base for resting cards. */
   .glass {
-    background-color: rgba(255, 255, 255, 0.55);
+    background-color: rgba(255, 255, 255, 0.78);
     backdrop-filter: blur(16px) saturate(160%);
     -webkit-backdrop-filter: blur(16px) saturate(160%);
-    border: 1px solid rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-top-color: rgba(255, 255, 255, 0.95);
+    border-left-color: rgba(255, 255, 255, 0.8);
+    /* Neuomorphic extrusion — light highlight top-left, soft shadow bottom-right.
+       Cards read as gently raised pillows of frosted glass. !important so it
+       wins over the leftover `shadow-sm` utility on card elements. */
+    box-shadow:
+      -7px -7px 14px rgba(255, 255, 255, 0.95),
+      9px 9px 20px rgba(51, 65, 85, 0.30) !important;
   }
   .dark .glass {
-    background-color: rgba(15, 23, 42, 0.45);
-    border-color: rgba(148, 163, 184, 0.16);
+    background-color: rgba(15, 23, 42, 0.85);
+    border-color: rgba(203, 213, 225, 0.10);
+    border-top-color: rgba(203, 213, 225, 0.22);
+    border-left-color: rgba(203, 213, 225, 0.16);
+    box-shadow:
+      -8px -8px 16px rgba(51, 65, 85, 0.55),
+      10px 10px 22px rgba(0, 0, 0, 0.9) !important;
   }
   .glass-strong {
     background-color: rgba(255, 255, 255, 0.7);
@@ -67,6 +80,19 @@ html, body {
   }
   .dark .glass-strong {
     background-color: rgba(15, 23, 42, 0.6);
+  }
+
+  /* Neuomorphic inset — pressed / carved-in feel for inputs, textareas, selects.
+     Focus rings (utilities) intentionally override this on :focus for a11y. */
+  .neuo-inset {
+    box-shadow:
+      inset 3px 3px 6px rgba(100, 116, 139, 0.30),
+      inset -3px -3px 6px rgba(255, 255, 255, 0.85);
+  }
+  .dark .neuo-inset {
+    box-shadow:
+      inset 3px 3px 6px rgba(2, 6, 23, 0.7),
+      inset -3px -3px 6px rgba(148, 163, 184, 0.10);
   }
 }
 

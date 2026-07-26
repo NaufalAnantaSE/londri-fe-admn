@@ -22,7 +22,7 @@ export default function LoginPage() {
     onError: (e) => setError(apiMessage(e)),
   });
 
-  const inputCls = 'min-h-[48px] w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 pl-11 pr-4 outline-none focus:border-sky-400 dark:focus:border-sky-600';
+  const inputCls = 'neuo-inset min-h-[48px] w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 pl-11 pr-4 outline-none focus:border-sky-400 dark:focus:border-sky-600';
 
   return (
     <div className="min-h-[100dvh]">
