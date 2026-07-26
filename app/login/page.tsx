@@ -5,7 +5,8 @@ import { useMutation } from '@tanstack/react-query';
 import { authApi } from '@/lib/api';
 import { apiMessage } from '@/lib/api/client';
 import { useAuth } from '@/lib/auth';
-import { WashingMachine, User, LockKey, Eye, EyeSlash, CircleNotch } from '@phosphor-icons/react';
+import Image from 'next/image';
+import { User, LockKey, Eye, EyeSlash, CircleNotch } from '@phosphor-icons/react';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -30,7 +31,9 @@ export default function LoginPage() {
         <div className="absolute -left-10 -top-10 h-40 w-40 rounded-full bg-white/10 blur-2xl" />
         <div className="absolute -bottom-14 right-6 h-48 w-48 rounded-full bg-white/10 blur-2xl" />
         <div className="absolute right-16 top-8 h-20 w-20 rounded-full bg-white/10 blur-xl" />
-        <WashingMachine size={64} weight="duotone" className="text-white" />
+        <div className="flex h-24 w-24 items-center justify-center rounded-3xl bg-white/95 p-3 shadow-lg">
+          <Image src="/logo.png" alt="Londri POS" width={80} height={64} priority className="h-auto w-full" />
+        </div>
         <h1 className="mt-3 text-2xl font-bold text-white">Londri POS</h1>
         <p className="mt-1 text-sm text-white/80">Masuk sebagai Superadmin</p>
       </div>
