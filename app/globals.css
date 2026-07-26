@@ -2,8 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Hallmark · genre: modern-minimal · design-system: in-place · designed-as-app
+   Type pairing (2+1): display = Space Grotesk (--font-display), body = Plus Jakarta.
+   Headings & the app wordmark pick up the display face; body stays Jakarta. */
+@layer base {
+  h1, h2, h3 {
+    font-family: var(--font-display), var(--font-jakarta), system-ui, sans-serif;
+    letter-spacing: -0.02em;
+  }
+  .font-display {
+    font-family: var(--font-display), var(--font-jakarta), system-ui, sans-serif;
+  }
+  /* Tabular figures render in the display face — grotesk numerals read as data. */
+  .tabular-nums {
+    font-family: var(--font-display), var(--font-jakarta), system-ui, sans-serif;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
 html, body {
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body {

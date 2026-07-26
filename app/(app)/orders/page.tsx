@@ -112,7 +112,7 @@ export default function OrdersPage() {
             <div className="flex flex-wrap gap-2">
               {STATUSES.map((s) => (
                 <button key={s} onClick={() => setDraft({ ...draft, status: draft.status === s ? undefined : s })}
-                  className={`min-h-[36px] rounded-full px-3 text-xs font-medium ${draft.status === s ? 'bg-gradient-to-r from-sky-500 via-sky-600 to-indigo-600 text-white shadow-sm shadow-sky-500/30' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'}`}>
+                  className={`min-h-[36px] rounded-full px-3 text-xs font-medium ${draft.status === s ? 'bg-sky-600 text-white shadow-sm shadow-sky-600/30' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'}`}>
                   {STATUS_LABEL[s]}
                 </button>
               ))}
@@ -123,7 +123,7 @@ export default function OrdersPage() {
             <div className="flex flex-wrap gap-2">
               {PAYMENTS.map((p) => (
                 <button key={p} onClick={() => setDraft({ ...draft, paymentMethod: draft.paymentMethod === p ? undefined : p })}
-                  className={`min-h-[36px] rounded-full px-3 text-xs font-medium ${draft.paymentMethod === p ? 'bg-gradient-to-r from-sky-500 via-sky-600 to-indigo-600 text-white shadow-sm shadow-sky-500/30' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'}`}>
+                  className={`min-h-[36px] rounded-full px-3 text-xs font-medium ${draft.paymentMethod === p ? 'bg-sky-600 text-white shadow-sm shadow-sky-600/30' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'}`}>
                   {PAYMENT_LABEL[p]}
                 </button>
               ))}

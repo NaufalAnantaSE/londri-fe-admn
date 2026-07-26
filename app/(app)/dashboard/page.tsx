@@ -5,7 +5,7 @@ import { formatRupiah, formatBulan } from '@/lib/utils';
 import PageHeader from '@/components/page-header';
 import SkeletonList from '@/components/skeleton-list';
 import { useTheme } from '@/lib/theme';
-import { TrendUp, CalendarCheck, ListChecks, Users } from '@phosphor-icons/react';
+import { CalendarCheck, ListChecks, Users } from '@phosphor-icons/react';
 import dynamic from 'next/dynamic';
 
 // Dynamic import Recharts — huge chunk (~100KB), only needed on this page
@@ -71,14 +71,12 @@ export default function DashboardPage() {
       <div className="space-y-5 p-4">
         {/* Greeting */}
         <div>
-          <h2 className="text-xl font-bold">{sapaan()}, Admin 👋</h2>
+          <h2 className="text-xl font-bold">{sapaan()}, Admin</h2>
           <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">{today}</p>
         </div>
 
         {/* Hero card — revenue hari ini */}
-        <section className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-sky-500 via-sky-600 to-indigo-600 p-5 shadow-lg shadow-sky-500/25">
-          <TrendUp size={120} weight="duotone" className="absolute -right-4 -top-4 text-white/20" />
-          <div className="absolute -bottom-10 -left-6 h-32 w-32 rounded-full bg-white/10 blur-2xl" />
+        <section className="relative overflow-hidden rounded-2xl bg-sky-600 p-5 shadow-lg shadow-sky-600/20">
           <p className="text-xs font-medium text-white/80">Revenue hari ini</p>
           <p className="mt-1 text-3xl font-bold tabular-nums text-white">{formatRupiah(d?.revenue.daily.amount)}</p>
           <p className="mt-1 text-xs text-white/70">{d?.revenue.daily.count ?? 0} transaksi</p>

@@ -30,7 +30,7 @@ export default function SettingsPage() {
       <div className="space-y-4 p-4">
         <div className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
           <div className="flex items-center gap-4">
-            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-sky-500 via-sky-600 to-indigo-600 text-xl font-bold text-white shadow-md shadow-sky-500/30">
+            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-sky-600 text-xl font-bold text-white shadow-md shadow-sky-600/25">
               {(me?.username || 'A')[0].toUpperCase()}
             </div>
             <div>
@@ -45,7 +45,7 @@ export default function SettingsPage() {
           <div className="grid grid-cols-3 gap-2">
             {THEME_OPTIONS.map((opt) => (
               <button key={opt.value} onClick={() => setTheme(opt.value)}
-                className={`flex min-h-[64px] flex-col items-center justify-center gap-1.5 rounded-xl border-2 transition-all ${
+                className={`flex min-h-[64px] flex-col items-center justify-center gap-1.5 rounded-xl border-2 transition-colors ${
                   theme === opt.value
                     ? 'border-sky-500 bg-sky-50 dark:border-sky-500 dark:bg-sky-950'
                     : 'border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800'

@@ -26,11 +26,8 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-[100dvh]">
-      {/* Panel gradient brand ~35vh dengan gelembung dekoratif */}
-      <div className="relative flex h-[35vh] min-h-[240px] flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-sky-500 to-indigo-600 safe-top">
-        <div className="absolute -left-10 -top-10 h-40 w-40 rounded-full bg-white/10 blur-2xl" />
-        <div className="absolute -bottom-14 right-6 h-48 w-48 rounded-full bg-white/10 blur-2xl" />
-        <div className="absolute right-16 top-8 h-20 w-20 rounded-full bg-white/10 blur-xl" />
+      {/* Panel brand ~35vh */}
+      <div className="relative flex h-[35vh] min-h-[240px] flex-col items-center justify-center overflow-hidden bg-sky-600 safe-top">
         <div className="flex h-24 w-24 items-center justify-center rounded-3xl bg-white/95 p-3 shadow-lg">
           <Image src="/logo.png" alt="Londri POS" width={80} height={64} priority className="h-auto w-full" />
         </div>
@@ -64,7 +61,7 @@ export default function LoginPage() {
             </div>
           </div>
           <button type="submit" disabled={mutation.isPending}
-            className="flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-sky-500 via-sky-600 to-indigo-600 font-semibold text-white shadow-lg shadow-sky-500/30 transition-transform duration-150 active:scale-[0.98] disabled:opacity-60">
+            className="flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl bg-sky-600 font-semibold text-white shadow-lg shadow-sky-600/25 transition-[transform,background-color] duration-150 hover:bg-sky-700 active:scale-[0.98] disabled:opacity-60">
             {mutation.isPending ? (<><CircleNotch size={20} className="animate-spin" /> Masuk…</>) : 'Masuk'}
           </button>
         </form>

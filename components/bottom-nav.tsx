@@ -21,7 +21,7 @@ export default function BottomNav() {
           return (
             <Link key={item.href} href={item.href}
               className={`relative flex min-h-[56px] flex-col items-center justify-center gap-0.5 pt-1.5 text-[11px] transition-colors active:bg-slate-100 dark:active:bg-slate-800 ${active ? 'font-medium text-sky-600 dark:text-sky-400' : 'text-slate-400 dark:text-slate-500'}`}>
-              <span className={`h-1 w-6 rounded-full transition-all duration-200 ${active ? 'bg-sky-500' : 'bg-transparent'}`} />
+              <span className={`h-1 w-6 rounded-full transition-[background-color] duration-200 ${active ? 'bg-sky-500' : 'bg-transparent'}`} />
               <item.Icon size={24} weight={active ? 'fill' : 'regular'} />
               {item.label}
             </Link>

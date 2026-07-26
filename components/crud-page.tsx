@@ -121,7 +121,7 @@ export default function CrudPage<T extends { id: string }>(props: CrudPageProps<
               ) : f.type === 'switch' ? (
                 <button type="button" onClick={() => setForm({ ...form, [f.name]: !form[f.name] })}
                   className={`relative h-8 w-14 rounded-full transition-colors ${form[f.name] ? 'bg-emerald-500' : 'bg-slate-300'}`}>
-                  <span className={`absolute top-1 h-6 w-6 rounded-full bg-white dark:bg-slate-900 transition-all ${form[f.name] ? 'left-7' : 'left-1'}`} />
+                  <span className={`absolute top-1 h-6 w-6 rounded-full bg-white dark:bg-slate-900 transition-[left] ${form[f.name] ? 'left-7' : 'left-1'}`} />
                 </button>
               ) : (
                 <input type={f.type || 'text'} value={String(form[f.name] ?? '')} placeholder={f.placeholder}

@@ -86,7 +86,7 @@ export default function MembershipsPage() {
             <div className="flex gap-2">
               {(['ACTIVE', 'EXPIRED', 'BLOCKED'] as MembershipStatus[]).map((s) => (
                 <button key={s} onClick={() => setDraftStatus(draftStatus === s ? undefined : s)}
-                  className={`min-h-[36px] flex-1 rounded-full text-xs font-medium ${draftStatus === s ? 'bg-gradient-to-r from-sky-500 via-sky-600 to-indigo-600 text-white shadow-sm shadow-sky-500/30' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'}`}>
+                  className={`min-h-[36px] flex-1 rounded-full text-xs font-medium ${draftStatus === s ? 'bg-sky-600 text-white shadow-sm shadow-sky-600/30' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'}`}>
                   {MEMBER_LABEL[s]}
                 </button>
               ))}
