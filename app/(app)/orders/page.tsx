@@ -38,13 +38,14 @@ export default function OrdersPage() {
   const { data: branches } = useQuery({ queryKey: ['branches-all'], queryFn: () => branchesApi.list({ limit: 100 }) });
 
   const sentinel = useRef<HTMLDivElement>(null);
+  const { hasNextPage, isFetchingNextPage, fetchNextPage } = query;
   useEffect(() => {
     const el = sentinel.current;
     if (!el) return;
-    const obs = new IntersectionObserver((es) => { if (es[0].isIntersecting && query.hasNextPage && !query.isFetchingNextPage) query.fetchNextPage(); });
+    const obs = new IntersectionObserver((es) => { if (es[0].isIntersecting && hasNextPage && !isFetchingNextPage) fetchNextPage(); });
     obs.observe(el);
     return () => obs.disconnect();
-  }, [query]);
+  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   const activeCount = Object.values(filters).filter(Boolean).length;
 

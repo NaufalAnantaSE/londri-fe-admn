@@ -19,6 +19,9 @@ export default function MembershipsPage() {
   const [status, setStatus] = useState<MembershipStatus | undefined>();
   const [tierId, setTierId] = useState('');
   const [filterOpen, setFilterOpen] = useState(false);
+  // Draft: perubahan filter baru berlaku saat "Terapkan" (konsisten dgn halaman Order).
+  const [draftStatus, setDraftStatus] = useState<MembershipStatus | undefined>();
+  const [draftTierId, setDraftTierId] = useState('');
 
   useEffect(() => { const t = setTimeout(() => setDebounced(search), 400); return () => clearTimeout(t); }, [search]);
 
@@ -32,18 +35,19 @@ export default function MembershipsPage() {
   const { data: tiers } = useQuery({ queryKey: ['tiers-all'], queryFn: () => membershipTiersApi.list({ limit: 100 }) });
 
   const sentinel = useRef<HTMLDivElement>(null);
+  const { hasNextPage, isFetchingNextPage, fetchNextPage } = query;
   useEffect(() => {
     const el = sentinel.current; if (!el) return;
-    const obs = new IntersectionObserver((es) => { if (es[0].isIntersecting && query.hasNextPage && !query.isFetchingNextPage) query.fetchNextPage(); });
+    const obs = new IntersectionObserver((es) => { if (es[0].isIntersecting && hasNextPage && !isFetchingNextPage) fetchNextPage(); });
     obs.observe(el); return () => obs.disconnect();
-  }, [query]);
+  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   const activeCount = (status ? 1 : 0) + (tierId ? 1 : 0);
 
   return (
     <>
       <PageHeader title="Membership" right={
-        <button onClick={() => setFilterOpen(true)} className="relative flex h-10 w-10 items-center justify-center rounded-full active:bg-slate-100 dark:active:bg-slate-800" aria-label="Filter">
+        <button onClick={() => { setDraftStatus(status); setDraftTierId(tierId); setFilterOpen(true); }} className="relative flex h-10 w-10 items-center justify-center rounded-full active:bg-slate-100 dark:active:bg-slate-800" aria-label="Filter">
           <FunnelSimple size={20} weight={activeCount > 0 ? 'fill' : 'regular'} className={activeCount > 0 ? 'text-sky-600 dark:text-sky-400' : undefined} />
           {activeCount > 0 && <span className="absolute -right-0.5 -top-0.5 flex h-5 w-5 items-center justify-center rounded-full bg-sky-500 text-[10px] font-bold text-white">{activeCount}</span>}
         </button>
@@ -81,8 +85,8 @@ export default function MembershipsPage() {
             <p className="mb-2 text-sm font-medium">Status</p>
             <div className="flex gap-2">
               {(['ACTIVE', 'EXPIRED', 'BLOCKED'] as MembershipStatus[]).map((s) => (
-                <button key={s} onClick={() => setStatus(status === s ? undefined : s)}
-                  className={`min-h-[36px] flex-1 rounded-full text-xs font-medium ${status === s ? 'bg-gradient-to-r from-sky-500 via-sky-600 to-indigo-600 text-white shadow-sm shadow-sky-500/30' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'}`}>
+                <button key={s} onClick={() => setDraftStatus(draftStatus === s ? undefined : s)}
+                  className={`min-h-[36px] flex-1 rounded-full text-xs font-medium ${draftStatus === s ? 'bg-gradient-to-r from-sky-500 via-sky-600 to-indigo-600 text-white shadow-sm shadow-sky-500/30' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'}`}>
                   {MEMBER_LABEL[s]}
                 </button>
               ))}
@@ -90,12 +94,17 @@ export default function MembershipsPage() {
           </div>
           <div>
             <p className="mb-2 text-sm font-medium">Tier</p>
-            <select value={tierId} onChange={(e) => setTierId(e.target.value)} className="min-h-[44px] w-full rounded-xl border border-slate-200 dark:border-slate-700 px-3 text-sm">
+            <select value={draftTierId} onChange={(e) => setDraftTierId(e.target.value)} className="min-h-[44px] w-full rounded-xl border border-slate-200 dark:border-slate-700 px-3 text-sm">
               <option value="">Semua tier</option>
               {(tiers?.items || []).map((t) => <option key={t.id} value={t.id}>{t.name}</option>)}
             </select>
           </div>
-          <button onClick={() => setFilterOpen(false)} className="min-h-[48px] w-full rounded-xl bg-sky-500 font-semibold text-white">Terapkan</button>
+          <div className="grid grid-cols-2 gap-3 pt-1">
+            <button onClick={() => { setDraftStatus(undefined); setDraftTierId(''); setStatus(undefined); setTierId(''); setFilterOpen(false); }}
+              className="min-h-[48px] rounded-xl border border-slate-200 dark:border-slate-700 font-medium">Reset</button>
+            <button onClick={() => { setStatus(draftStatus); setTierId(draftTierId); setFilterOpen(false); }}
+              className="min-h-[48px] rounded-xl bg-sky-500 font-semibold text-white">Terapkan</button>
+          </div>
         </div>
       </BottomSheet>
     </>

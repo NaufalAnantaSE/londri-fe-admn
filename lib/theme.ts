@@ -26,6 +26,9 @@ function apply(resolved: 'light' | 'dark') {
   setTimeout(() => el.classList.remove('theme-transition'), 300);
 }
 
+// Cegah pemasangan listener matchMedia ganda antar re-hydrate.
+let systemListenerAttached = false;
+
 export const useTheme = create<ThemeState>((set, get) => ({
   theme: 'system',
   resolved: 'light',
@@ -35,8 +38,10 @@ export const useTheme = create<ThemeState>((set, get) => ({
     const res = resolve(saved);
     apply(res);
     set({ theme: saved, resolved: res, hydrated: true });
-    // Listen to system changes when theme=system
-    if (saved === 'system') {
+    // Listener sistem dipasang permanen (sekali). Handler cek tema terkini,
+    // sehingga tetap bekerja walau user memilih "system" setelah app berjalan.
+    if (typeof window !== 'undefined' && !systemListenerAttached) {
+      systemListenerAttached = true;
       window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
         if (get().theme === 'system') {
           const r = e.matches ? 'dark' : 'light';

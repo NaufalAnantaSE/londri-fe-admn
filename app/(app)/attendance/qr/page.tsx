@@ -21,7 +21,7 @@ export default function AttendanceQrPage() {
   const { data: qrCodes } = useQuery({ queryKey: ['attendance-qr'], queryFn: attendanceApi.qrCodes });
 
   const create = useMutation({
-    mutationFn: () => attendanceApi.createQr(branchId, Number(validHours)),
+    mutationFn: () => attendanceApi.createQr(branchId, Math.min(24, Math.max(1, Number(validHours) || 1))),
     onSuccess: async (qr) => {
       setGenerated(qr);
       setQrImage(await QRCode.toDataURL(qr.qrToken, { width: 480, margin: 2 }));
