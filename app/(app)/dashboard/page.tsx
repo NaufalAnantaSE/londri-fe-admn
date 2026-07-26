@@ -80,7 +80,7 @@ export default function DashboardPage() {
         <section className="relative overflow-hidden rounded-2xl bg-sky-600 p-5 shadow-lg shadow-sky-600/20">
           <p className="text-xs font-medium text-white/80">Revenue hari ini</p>
           <p className="mt-1 text-3xl font-bold tabular-nums text-white">{formatRupiah(d?.revenue.daily.amount)}</p>
-          <p className="mt-1 text-xs text-white/70">{d?.revenue.daily.count ?? 0} transaksi</p>
+          <p className="mt-1 text-xs text-white/70">{d?.revenue.daily.count ?? 0} transaksi selesai hari ini</p>
         </section>
 
         {/* Tiga metrik kecil */}

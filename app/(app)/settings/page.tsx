@@ -1,11 +1,12 @@
 'use client';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import PageHeader from '@/components/page-header';
 import { authApi } from '@/lib/api';
 import { useAuth } from '@/lib/auth';
 import { useTheme } from '@/lib/theme';
-import { Sun, Moon, GearSix } from '@phosphor-icons/react';
+import { Sun, Moon, GearSix, Question, CaretRight } from '@phosphor-icons/react';
 import { toast } from '@/hooks/useToast';
 
 const THEME_OPTIONS = [
@@ -58,6 +59,18 @@ export default function SettingsPage() {
             ))}
           </div>
         </div>
+
+        <Link href="/help"
+          className="flex items-center gap-3 rounded-2xl border border-slate-100 bg-white p-4 shadow-sm active:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 dark:active:bg-slate-800">
+          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-100 text-sky-600 dark:bg-sky-950 dark:text-sky-400">
+            <Question size={20} weight="duotone" />
+          </span>
+          <div className="flex-1">
+            <p className="font-medium">Bantuan &amp; Panduan</p>
+            <p className="text-xs text-slate-400 dark:text-slate-500">Cara pakai tiap fitur & FAQ</p>
+          </div>
+          <CaretRight size={18} className="text-slate-300 dark:text-slate-600" />
+        </Link>
 
         <button onClick={() => logoutMutation.mutate()} disabled={logoutMutation.isPending}
           className="min-h-[48px] w-full rounded-xl bg-red-50 font-semibold text-red-600 active:bg-red-100 disabled:opacity-50 dark:bg-red-950 dark:text-red-400 dark:active:bg-red-900">

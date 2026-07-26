@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import PageHeader from '@/components/page-header';
-import { House, Users, ShieldCheck, TShirt, Crown, Tag, QrCode, ChartLineUp, CaretRight } from '@phosphor-icons/react';
+import { House, Users, ShieldCheck, TShirt, Crown, Tag, QrCode, ChartLineUp, Question, CaretRight } from '@phosphor-icons/react';
 
 const modules = [
   { href: '/reports', label: 'Laporan', desc: 'Statistik & ekspor CSV/Excel/PDF', Icon: ChartLineUp, color: 'bg-sky-100 text-sky-600 dark:bg-sky-950 dark:text-sky-400' },
@@ -12,6 +12,7 @@ const modules = [
   { href: '/membership-tiers', label: 'Tier Membership', desc: 'Paket member', Icon: Crown, color: 'bg-rose-100 text-rose-600 dark:bg-rose-950 dark:text-rose-400' },
   { href: '/promotions', label: 'Promo', desc: 'Kode diskon', Icon: Tag, color: 'bg-teal-100 text-teal-600 dark:bg-teal-950 dark:text-teal-400' },
   { href: '/attendance', label: 'Presensi', desc: 'QR & log absensi', Icon: QrCode, color: 'bg-indigo-100 text-indigo-600 dark:bg-indigo-950 dark:text-indigo-400' },
+  { href: '/help', label: 'Bantuan', desc: 'Panduan & FAQ tiap fitur', Icon: Question, color: 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300' },
 ];
 
 export default function MasterPage() {

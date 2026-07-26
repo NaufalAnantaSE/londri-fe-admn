@@ -13,7 +13,7 @@ import { useTheme } from '@/lib/theme';
 import { toast } from '@/hooks/useToast';
 import {
   TrendUp, Receipt, Wallet, Users, ChartBar, DownloadSimple,
-  FileCsv, FileXls, FilePdf, X, Funnel,
+  FileCsv, FileXls, FilePdf, X, Funnel, Info,
 } from '@phosphor-icons/react';
 
 const BarChart = dynamic(() => import('recharts').then(m => m.BarChart), { ssr: false });
@@ -267,6 +267,10 @@ export default function ReportsPage() {
                 </div>
               ))}
             </div>
+            <p className="-mt-2 flex items-center gap-1.5 px-1 text-[11px] text-slate-400 dark:text-slate-500">
+              <Info size={13} weight="duotone" className="shrink-0" />
+              Revenue dihitung dari order berstatus <b className="font-semibold">Selesai</b>. Order yang masih diproses belum terhitung.
+            </p>
 
             {/* Tren revenue harian */}
             <section className="glass rounded-2xl border border-slate-200/60 dark:border-slate-800 p-4">
