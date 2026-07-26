@@ -6,8 +6,8 @@ export default function ConfirmDialog({ open, title, message, loading, onCancel,
   if (!open) return null;
   return (
     <div className="fixed inset-0 z-[95] mx-auto flex max-w-md items-center justify-center px-8">
-      <div className="absolute inset-0 bg-black/40" onClick={onCancel} />
-      <div className="relative w-full rounded-3xl bg-white dark:bg-slate-900 p-6">
+      <div className="animate-fade-in absolute inset-0 bg-black/40" onClick={onCancel} />
+      <div className="animate-dialog-in relative w-full rounded-3xl bg-white dark:bg-slate-900 p-6 shadow-xl">
         <h3 className="text-base font-semibold">{title}</h3>
         {message && <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">{message}</p>}
         <div className="mt-6 grid grid-cols-2 gap-3">

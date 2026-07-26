@@ -33,6 +33,14 @@ function inisial(name: string) {
   return name.split(' ').filter(Boolean).slice(0, 2).map((w) => w[0].toUpperCase()).join('');
 }
 
+function sapaan() {
+  const h = new Date().getHours();
+  if (h < 11) return 'Selamat pagi';
+  if (h < 15) return 'Selamat siang';
+  if (h < 18) return 'Selamat sore';
+  return 'Selamat malam';
+}
+
 export default function DashboardPage() {
   const { resolved } = useTheme();
   const isDark = resolved === 'dark';
@@ -63,7 +71,7 @@ export default function DashboardPage() {
       <div className="space-y-5 p-4">
         {/* Greeting */}
         <div>
-          <h2 className="text-xl font-bold">Halo, Admin 👋</h2>
+          <h2 className="text-xl font-bold">{sapaan()}, Admin 👋</h2>
           <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">{today}</p>
         </div>
 

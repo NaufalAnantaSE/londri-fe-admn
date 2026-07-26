@@ -8,7 +8,7 @@ import EmptyState from '@/components/empty-state';
 import { attendanceApi, branchesApi, staffsApi } from '@/lib/api';
 import { formatTanggal } from '@/lib/utils';
 import type { AttendanceType } from '@/lib/types';
-import { SignIn, SignOut } from '@phosphor-icons/react';
+import { SignIn, SignOut, ClipboardText } from '@phosphor-icons/react';
 import { useRef } from 'react';
 
 export default function AttendancePage() {
@@ -75,7 +75,7 @@ export default function AttendancePage() {
               <p className="text-xs text-slate-500 dark:text-slate-400">{formatTanggal(a.scannedAt, true)}</p>
             </div>
           ))}
-          {!(query.data?.pages[0]?.items?.length) && <EmptyState emoji="📋" title="Belum ada presensi" />}
+          {!(query.data?.pages[0]?.items?.length) && <EmptyState icon={ClipboardText} title="Belum ada presensi" />}
           <div ref={sentinel} className="h-4" />
         </div>
       )}

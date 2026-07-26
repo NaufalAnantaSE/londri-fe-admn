@@ -10,6 +10,8 @@ import Fab from '@/components/fab';
 import BottomSheet from '@/components/bottom-sheet';
 import ConfirmDialog from '@/components/confirm-dialog';
 import Field, { inputCls } from '@/components/field';
+import SearchInput from '@/components/search-input';
+import { Package } from '@phosphor-icons/react';
 import { toast } from '@/hooks/useToast';
 import type { Paginated } from '@/lib/types';
 
@@ -90,8 +92,7 @@ export default function CrudPage<T extends { id: string }>(props: CrudPageProps<
     <>
       <PageHeader title={props.title} back />
       <div className="sticky top-[56px] z-30 bg-white dark:bg-slate-900 px-4 py-2">
-        <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder={props.searchPlaceholder || 'Cari…'}
-          className="min-h-[44px] w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-4 text-sm outline-none focus:border-sky-400 dark:focus:border-sky-600" />
+        <SearchInput value={search} onChange={setSearch} placeholder={props.searchPlaceholder || 'Cari…'} />
       </div>
       {listQuery.isLoading ? <SkeletonList /> : items.length ? (
         <div className="space-y-3 p-4">
@@ -101,7 +102,7 @@ export default function CrudPage<T extends { id: string }>(props: CrudPageProps<
             </div>
           ))}
         </div>
-      ) : <EmptyState emoji="📦" title={`Belum ada ${props.title.toLowerCase()}`} description="Tekan tombol + untuk menambah" />}
+      ) : <EmptyState icon={Package} title={`Belum ada ${props.title.toLowerCase()}`} description="Tekan tombol + untuk menambah" />}
 
       <Fab onClick={openCreate} />
 

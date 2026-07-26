@@ -6,11 +6,12 @@ import PageHeader from '@/components/page-header';
 import SkeletonList from '@/components/skeleton-list';
 import EmptyState from '@/components/empty-state';
 import BottomSheet from '@/components/bottom-sheet';
+import SearchInput from '@/components/search-input';
 import { membershipsApi, membershipTiersApi } from '@/lib/api';
 import { formatRupiah, formatTanggal } from '@/lib/utils';
 import type { MembershipStatus } from '@/lib/types';
 import { MEMBER_BADGE, MEMBER_LABEL } from '@/lib/labels';
-import { Crown } from '@phosphor-icons/react';
+import { Crown, FunnelSimple, CircleNotch } from '@phosphor-icons/react';
 
 export default function MembershipsPage() {
   const [search, setSearch] = useState('');
@@ -37,16 +38,18 @@ export default function MembershipsPage() {
     obs.observe(el); return () => obs.disconnect();
   }, [query]);
 
+  const activeCount = (status ? 1 : 0) + (tierId ? 1 : 0);
+
   return (
     <>
       <PageHeader title="Membership" right={
-        <button onClick={() => setFilterOpen(true)} className="flex h-10 w-10 items-center justify-center rounded-full active:bg-slate-100 dark:active:bg-slate-800" aria-label="Filter">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="h-5 w-5"><path strokeLinecap="round" d="M3 6h18M7 12h10m-7 6h4" /></svg>
+        <button onClick={() => setFilterOpen(true)} className="relative flex h-10 w-10 items-center justify-center rounded-full active:bg-slate-100 dark:active:bg-slate-800" aria-label="Filter">
+          <FunnelSimple size={20} weight={activeCount > 0 ? 'fill' : 'regular'} className={activeCount > 0 ? 'text-sky-600 dark:text-sky-400' : undefined} />
+          {activeCount > 0 && <span className="absolute -right-0.5 -top-0.5 flex h-5 w-5 items-center justify-center rounded-full bg-sky-500 text-[10px] font-bold text-white">{activeCount}</span>}
         </button>
       } />
       <div className="sticky top-[56px] z-30 bg-white dark:bg-slate-900 px-4 py-2">
-        <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Cari nama / telepon…"
-          className="min-h-[44px] w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-4 text-sm outline-none focus:border-sky-400 dark:focus:border-sky-600" />
+        <SearchInput value={search} onChange={setSearch} placeholder="Cari nama / telepon…" />
       </div>
       {query.isLoading ? <SkeletonList /> : (
         <div className="space-y-3 p-4">
@@ -67,9 +70,9 @@ export default function MembershipsPage() {
               </div>
             </Link>
           ))}
-          {!(query.data?.pages[0]?.items?.length) && <EmptyState emoji="👑" title="Belum ada member" />}
+          {!(query.data?.pages[0]?.items?.length) && <EmptyState icon={Crown} title="Belum ada member" description={activeCount || debounced ? 'Coba ubah kata kunci atau filter' : undefined} />}
           <div ref={sentinel} className="h-4" />
-          {query.isFetchingNextPage && <p className="py-2 text-center text-xs text-slate-400 dark:text-slate-500">Memuat…</p>}
+          {query.isFetchingNextPage && <p className="flex items-center justify-center gap-1.5 py-2 text-center text-xs text-slate-400 dark:text-slate-500"><CircleNotch size={14} className="animate-spin" /> Memuat…</p>}
         </div>
       )}
       <BottomSheet open={filterOpen} onClose={() => setFilterOpen(false)} title="Filter Member">

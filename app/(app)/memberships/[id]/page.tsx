@@ -7,6 +7,7 @@ import EmptyState from '@/components/empty-state';
 import { membershipsApi } from '@/lib/api';
 import { formatRupiah, formatTanggal } from '@/lib/utils';
 import { MEMBER_BADGE, MEMBER_LABEL } from '@/lib/labels';
+import { Wallet, Receipt } from '@phosphor-icons/react';
 
 type Tab = 'info' | 'balance' | 'transaksi';
 
@@ -80,7 +81,7 @@ export default function MembershipDetailPage({ params }: { params: { id: string 
                     <p className="mt-1 text-[11px] text-slate-400 dark:text-slate-500">{formatTanggal(l.createdAt, true)}</p>
                   </div>
                 ))}
-                {!balanceLogs.data?.length && <EmptyState emoji="💳" title="Belum ada riwayat saldo" />}
+                {!balanceLogs.data?.length && <EmptyState icon={Wallet} title="Belum ada riwayat saldo" />}
               </div>
             )
           )}
@@ -98,7 +99,7 @@ export default function MembershipDetailPage({ params }: { params: { id: string 
                     <p className="mt-1 text-[11px] text-slate-400 dark:text-slate-500">{formatTanggal(t.createdAt, true)}</p>
                   </div>
                 ))}
-                {!transactions.data?.length && <EmptyState emoji="🧾" title="Belum ada transaksi" />}
+                {!transactions.data?.length && <EmptyState icon={Receipt} title="Belum ada transaksi" />}
               </div>
             )
           )}
