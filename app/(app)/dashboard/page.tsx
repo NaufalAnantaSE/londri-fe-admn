@@ -1,5 +1,6 @@
 'use client';
 import { useQueries } from '@tanstack/react-query';
+import Link from 'next/link';
 import { dashboardApi } from '@/lib/api';
 import { formatRupiah, formatBulan } from '@/lib/utils';
 import PageHeader from '@/components/page-header';
@@ -92,7 +93,10 @@ export default function DashboardPage() {
         </div>
 
         <section className="rounded-2xl border border-slate-200/60 dark:border-slate-800 glass p-4 shadow-sm">
-          <h2 className="mb-4 font-semibold">Revenue per bulan</h2>
+          <div className="mb-4 flex items-center justify-between">
+            <h2 className="font-semibold">Revenue per bulan</h2>
+            <Link href="/reports" className="text-xs font-medium text-sky-600 dark:text-sky-400 active:opacity-70">Laporan lengkap →</Link>
+          </div>
           {chartData.length ? (
             <ResponsiveContainer width="100%" height={210}>
               <AreaChart data={chartData} margin={{ top: 5, right: 5, left: 5, bottom: 0 }}>

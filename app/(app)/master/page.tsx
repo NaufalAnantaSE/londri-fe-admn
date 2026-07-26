@@ -1,9 +1,10 @@
 'use client';
 import Link from 'next/link';
 import PageHeader from '@/components/page-header';
-import { House, Users, ShieldCheck, TShirt, Crown, Tag, QrCode, CaretRight } from '@phosphor-icons/react';
+import { House, Users, ShieldCheck, TShirt, Crown, Tag, QrCode, ChartLineUp, CaretRight } from '@phosphor-icons/react';
 
 const modules = [
+  { href: '/reports', label: 'Laporan', desc: 'Statistik & ekspor CSV/Excel/PDF', Icon: ChartLineUp, color: 'bg-sky-100 text-sky-600 dark:bg-sky-950 dark:text-sky-400' },
   { href: '/branches', label: 'Cabang', desc: 'Kelola cabang laundry', Icon: House, color: 'bg-sky-100 text-sky-600 dark:bg-sky-950 dark:text-sky-400' },
   { href: '/staffs', label: 'Staff', desc: 'Akun kasir & karyawan', Icon: Users, color: 'bg-violet-100 text-violet-600 dark:bg-violet-950 dark:text-violet-400' },
   { href: '/staff-roles', label: 'Role Staff', desc: 'Hak akses staff', Icon: ShieldCheck, color: 'bg-emerald-100 text-emerald-600 dark:bg-emerald-950 dark:text-emerald-400' },

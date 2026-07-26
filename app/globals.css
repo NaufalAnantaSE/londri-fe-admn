@@ -136,3 +136,33 @@ html.theme-transition body {
   to { opacity: 1; }
 }
 .animate-fade-in { animation: fade-in 0.2s ease-out; }
+
+/* ===== Cetak / ekspor PDF (halaman Laporan) =====
+   Sembunyikan chrome aplikasi, ratakan glass jadi kartu putih bersih,
+   dan buang batas lebar mobile agar tabel muat di kertas. */
+@media print {
+  /* Sembunyikan navigasi, backdrop, dan elemen ber-tag print:hidden */
+  nav, .app-ambient, .print\:hidden { display: none !important; }
+  /* Header aplikasi (sticky) tidak perlu dicetak */
+  header.glass-strong { display: none !important; }
+
+  html, body { background: #fff !important; }
+  /* Kolom app: buang max-width & background gelap, gunakan seluruh halaman */
+  body > * { background: transparent !important; }
+  .max-w-md { max-width: 100% !important; }
+  main { padding-bottom: 0 !important; }
+
+  /* Glass → kartu putih rata dengan garis tipis, tanpa blur/shadow */
+  .glass, .glass-strong {
+    background: #fff !important;
+    box-shadow: none !important;
+    border: 1px solid #e2e8f0 !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    break-inside: avoid;
+  }
+  /* Warna teks dipaksa gelap agar terbaca di kertas */
+  * { color: #0f172a !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .print\:block { display: block !important; }
+  @page { margin: 1.4cm; }
+}
