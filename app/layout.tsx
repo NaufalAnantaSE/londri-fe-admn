@@ -33,7 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className={`${jakarta.variable} font-sans bg-slate-100 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased`}>
         <Providers>
-          <div className="mx-auto min-h-[100dvh] max-w-md bg-white dark:bg-slate-900 shadow-sm">{children}</div>
+          <div className="mx-auto min-h-[100dvh] max-w-md overflow-x-clip bg-white dark:bg-slate-900 shadow-sm">{children}</div>
         </Providers>
       </body>
     </html>

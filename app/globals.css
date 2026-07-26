@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html, body {
+  overflow-x: hidden;
+}
+
 body {
   overscroll-behavior-y: none;
   -webkit-tap-highlight-color: transparent;
