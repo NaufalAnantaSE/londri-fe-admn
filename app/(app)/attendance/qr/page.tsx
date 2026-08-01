@@ -67,7 +67,14 @@ export default function AttendanceQrPage() {
         )}
 
         <section>
-          <h2 className="mb-3 font-semibold">QR Aktif Sebelumnya</h2>
+          <div className="mb-3 flex items-center justify-between">
+            <h2 className="font-semibold">QR Aktif Sebelumnya</h2>
+            {qrCodes?.length ? (
+              <span className="rounded-full bg-primary-container/10 px-2.5 py-1 font-label-md text-label-md font-medium text-primary dark:bg-primary-container/20">
+                {qrCodes.length} QR
+              </span>
+            ) : null}
+          </div>
           <div className="space-y-2">
             {qrCodes?.map((qr) => (
               <div key={qr.id} className="rounded-xl border border-border-subtle dark:border-outline-variant/20 glass p-md shadow-card">
