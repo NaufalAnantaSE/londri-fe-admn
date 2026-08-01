@@ -42,18 +42,33 @@ export default function StaffsPage() {
       }}
       fromItem={(s) => ({ fullName: s.fullName, username: s.username, password: '', branchId: s.branchId, roleId: s.roleId, phoneNumber: s.phoneNumber || '', address: s.address || '', isActive: s.isActive })}
       renderCard={(s, { edit, remove }) => (
-        <div className="flex items-start justify-between gap-2 rounded-xl border border-border-subtle dark:border-outline-variant/20 glass p-md shadow-card">
-          <div>
-            <div className="flex items-center gap-2">
-              <p className="font-semibold">{s.fullName}</p>
-              <span className={`chip font-bold ${s.isActive ? 'chip-success' : 'chip-neutral'}`}>
-                {s.isActive ? 'AKTIF' : 'NONAKTIF'}
+        <div className={`overflow-hidden rounded-xl border border-border-subtle dark:border-outline-variant/20 shadow-card ${!s.isActive ? 'opacity-60' : ''}`}>
+          {/* Top: avatar + name + status */}
+          <div className="flex items-center justify-between px-md py-3">
+            <div className="flex items-center gap-3">
+              <span className={`flex h-10 w-10 items-center justify-center rounded-full text-xs font-bold ${s.isActive ? 'bg-primary-container/10 text-primary' : 'bg-surface-container text-on-surface-variant'}`}>
+                {s.fullName.split(' ').filter(Boolean).slice(0, 2).map((w) => w[0].toUpperCase()).join('')}
               </span>
+              <div>
+                <p className="font-semibold">{s.fullName}</p>
+                <p className="font-body-md text-body-md text-secondary dark:text-outline-variant">{s.role?.name}</p>
+              </div>
             </div>
-            <p className="mt-1 font-body-md text-body-md text-on-surface-variant dark:text-outline-variant">@{s.username} · {s.role?.name}</p>
-            <p className="font-body-md text-body-md text-outline dark:text-outline-variant">{s.branch?.name}</p>
+            <span className={`chip font-bold ${s.isActive ? 'chip-success' : 'chip-neutral'}`}>
+              {s.isActive ? 'Aktif' : 'Nonaktif'}
+            </span>
           </div>
-          <CardActions onEdit={edit} onDelete={remove} />
+          {/* Divider */}
+          <div className="border-t border-border-subtle dark:border-outline-variant/20" />
+          {/* Bottom: branch meta */}
+          <div className="flex items-center justify-between px-md py-3">
+            <div className="flex items-center gap-1.5">
+              <span className="material-symbols-outlined text-[14px] text-outline dark:text-outline-variant">storefront</span>
+              <span className="font-label-md text-label-md text-outline dark:text-outline-variant">Branch</span>
+              <span className="font-body-md text-body-md font-medium">{s.branch?.name}</span>
+            </div>
+            <CardActions onEdit={edit} onDelete={remove} />
+          </div>
         </div>
       )}
     />

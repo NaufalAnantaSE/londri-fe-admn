@@ -58,18 +58,23 @@ export default function MembershipsPage() {
       {query.isLoading ? <SkeletonList /> : (
         <div className="space-y-3 p-4">
           {(query.data?.pages || []).flatMap((p) => p.items).map((m) => (
-            <Link key={m.id} href={`/memberships/${m.id}`} className="block rounded-xl border border-border-subtle dark:border-outline-variant/20 glass p-md shadow-card transition-transform duration-150 active:scale-[0.98]">
-              <div className="flex items-start justify-between gap-2">
-                <div>
-                  <p className="font-semibold">{m.customerName}</p>
-                  <p className="mt-0.5 flex items-center gap-1 font-body-md text-body-md text-on-surface-variant dark:text-outline-variant">
-                    {m.phoneNumber} · <Crown size={13} weight="fill" className="text-warning" />{m.tier?.name}
-                  </p>
+            <Link key={m.id} href={`/memberships/${m.id}`} className="block overflow-hidden rounded-xl border border-border-subtle dark:border-outline-variant/20 shadow-card transition-transform duration-150 active:scale-[0.98]">
+              <div className="flex items-center justify-between border-b border-border-subtle dark:border-outline-variant/20 bg-surface-container-low dark:bg-white/5 px-md py-2.5">
+                <div className="flex items-center gap-2">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary-container/10 font-headline-md text-[11px] font-bold text-primary dark:bg-primary-container/20">
+                    {m.customerName.split(' ').filter(Boolean).slice(0, 2).map((w) => w[0].toUpperCase()).join('')}
+                  </span>
+                  <span className="font-body-lg text-body-lg font-medium text-on-surface dark:text-inverse-on-surface">{m.customerName}</span>
                 </div>
-                <span className={`shrink-0 rounded-full px-2.5 py-1 text-[11px] font-semibold ${MEMBER_BADGE[m.status]}`}>{MEMBER_LABEL[m.status]}</span>
+                <span className={`rounded-md px-2 py-0.5 font-label-md text-label-md ${MEMBER_BADGE[m.status]}`}>{MEMBER_LABEL[m.status]}</span>
               </div>
-              <div className="mt-3 flex items-center justify-between text-sm">
-                <span className="text-outline dark:text-outline-variant">Exp {formatTanggal(m.expiresAt)}</span>
+              <div className="flex items-center justify-between p-md">
+                <div>
+                  <p className="flex items-center gap-1 font-body-md text-body-md text-secondary dark:text-outline-variant">
+                    <Crown size={13} weight="duotone" />{m.tier?.name} · {m.phoneNumber}
+                  </p>
+                  <p className="mt-1 font-label-md text-label-md text-outline dark:text-outline-variant">Exp {formatTanggal(m.expiresAt)}</p>
+                </div>
                 <span className="font-data-tabular text-data-tabular font-semibold tabular-nums text-primary dark:text-inverse-primary">{formatRupiah(m.balance)}</span>
               </div>
             </Link>
