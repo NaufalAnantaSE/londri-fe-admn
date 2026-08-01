@@ -24,12 +24,13 @@ export default function MembershipDetailPage({ params }: { params: { id: string 
       <PageHeader title={m.customerName} back />
       <div className="p-4">
         <section className="rounded-xl border border-border-subtle dark:border-outline-variant/20 glass p-5 shadow-card">
-          <div className="flex items-start justify-between">
-            <div>
-              <p className="text-lg font-bold">{m.customerName}</p>
-              <p className="font-body-md text-body-md text-on-surface-variant dark:text-outline-variant">{m.phoneNumber}</p>
-            </div>
-            <span className={`chip font-semibold ${MEMBER_BADGE[m.status]}`}>{MEMBER_LABEL[m.status]}</span>
+          <div className="flex flex-col items-center text-center">
+            <span className="flex h-16 w-16 items-center justify-center rounded-full bg-primary-container/10 font-headline-lg text-xl font-bold text-primary dark:bg-primary-container/20">
+              {m.customerName.split(' ').filter(Boolean).slice(0, 2).map((w) => w[0].toUpperCase()).join('')}
+            </span>
+            <p className="mt-2 text-lg font-bold">{m.customerName}</p>
+            <p className="font-body-md text-body-md text-on-surface-variant dark:text-outline-variant">{m.phoneNumber}</p>
+            <span className={`mt-2 chip font-semibold ${MEMBER_BADGE[m.status]}`}>{MEMBER_LABEL[m.status]}</span>
           </div>
           <div className="mt-4 grid grid-cols-2 gap-3">
             <div className="rounded-md bg-primary-container p-3">

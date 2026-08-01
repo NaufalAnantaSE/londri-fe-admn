@@ -28,7 +28,7 @@ export default function OrderDetailPage({ params }: { params: { id: string } }) 
 
   if (isLoading || !order) return <><PageHeader title="Detail Order" back /><SkeletonList rows={5} /></>;
   const currentIdx = ORDER_FLOW.indexOf(order.status);
-  const isTerminal = order.status === 'COMPLETED' || order.status === 'CANCELLED';
+  const isTerminal = order.status === 'DIAMBIL' || order.status === 'CANCELLED';
   const nextOptions = !isTerminal ? [ORDER_FLOW[currentIdx + 1], 'CANCELLED' as OrderStatus].filter(Boolean) : [];
 
   return (
@@ -36,11 +36,17 @@ export default function OrderDetailPage({ params }: { params: { id: string } }) 
       <PageHeader title={order.invoiceNumber} back />
       <div className="space-y-4 p-4 pb-28">
         <section className="rounded-xl border border-border-subtle dark:border-outline-variant/20 glass p-md shadow-card">
-          <div className="flex items-start justify-between">
-            <div>
-              <p className="text-lg font-bold">{order.customerName}</p>
-              <p className="font-body-md text-body-md text-on-surface-variant dark:text-outline-variant">{order.phoneNumber}</p>
-              {order.address && <p className="mt-1 font-body-md text-body-md text-outline dark:text-outline-variant">{order.address}</p>}
+          <p className="font-label-md text-label-md uppercase tracking-wide text-outline dark:text-outline-variant">Customer</p>
+          <div className="mt-2 flex items-start justify-between">
+            <div className="flex items-center gap-3">
+              <span className="flex h-11 w-11 items-center justify-center rounded-full bg-primary-container/10 font-headline-md text-sm font-bold text-primary dark:bg-primary-container/20">
+                {order.customerName.split(' ').filter(Boolean).slice(0, 2).map((w) => w[0].toUpperCase()).join('')}
+              </span>
+              <div>
+                <p className="text-lg font-bold">{order.customerName}</p>
+                  <p className="font-body-md text-body-md text-on-surface-variant dark:text-outline-variant">{order.phoneNumber}</p>
+                  {order.address && <p className="mt-1 font-body-md text-body-md text-outline dark:text-outline-variant">{order.address}</p>}
+                </div>
             </div>
             <span className={`chip font-semibold ${STATUS_BADGE[order.status]}`}>{STATUS_LABEL[order.status]}</span>
           </div>
