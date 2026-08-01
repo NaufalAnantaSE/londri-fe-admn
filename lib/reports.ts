@@ -37,7 +37,7 @@ export const PERIOD_LABEL: Record<PeriodPreset, string> = {
 };
 
 // ===== Fetch semua order dalam periode (loop pagination) =====
-const REVENUE_STATUSES: OrderStatus[] = ['COMPLETED'];
+const REVENUE_STATUSES: OrderStatus[] = ['SELESAI', 'DIAMBIL'];
 
 export interface ReportFilters {
   branchId?: string;
@@ -70,14 +70,14 @@ export interface Breakdown {
   key: string;
   label: string;
   count: number;      // jumlah order
-  revenue: number;    // total revenue (order COMPLETED)
+  revenue: number;    // total revenue (order SELESAI/DIAMBIL)
 }
 
 export interface ReportStats {
   period: Period;
   orders: Order[];
   // KPI
-  totalRevenue: number;     // hanya order COMPLETED
+  totalRevenue: number;     // hanya order SELESAI/DIAMBIL
   totalOrders: number;      // semua order pada periode
   completedOrders: number;
   cancelledOrders: number;
@@ -97,8 +97,7 @@ const num = (v: string | number | null | undefined) => Number(v || 0);
 const isRevenue = (o: Order) => REVENUE_STATUSES.includes(o.status);
 
 const STATUS_ID: Record<OrderStatus, string> = {
-  WAITING: 'Menunggu', PROCESSING: 'Diproses', WASHING: 'Dicuci', DRYING: 'Dikeringkan',
-  IRONING: 'Disetrika', READY_FOR_PICKUP: 'Siap Diambil', COMPLETED: 'Selesai', CANCELLED: 'Dibatalkan',
+  DI_PROSES: 'Diproses', SELESAI: 'Selesai', DIAMBIL: 'Diambil', CANCELLED: 'Dibatalkan',
 };
 const PAYMENT_ID: Record<PaymentMethod, string> = {
   CASH: 'Tunai', TRANSFER: 'Transfer', QRIS: 'QRIS', MEMBERSHIP: 'Membership',

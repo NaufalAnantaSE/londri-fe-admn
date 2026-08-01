@@ -27,7 +27,7 @@ const SECTIONS: Section[] = [
     color: 'bg-primary-container text-on-primary-container',
     faqs: [
       { q: 'Apa isi halaman Dashboard?', a: 'Ringkasan cepat bisnis: revenue hari ini, revenue bulan ini, jumlah order, member aktif, grafik revenue per bulan, performa kasir, penjualan membership per tier, dan promo terpopuler.' },
-      { q: 'Kenapa revenue hari ini Rp 0 padahal ada order?', a: 'Revenue hanya dihitung dari order berstatus "Selesai" (COMPLETED). Order yang masih Menunggu/Diproses belum masuk hitungan revenue. Selesaikan order dulu agar terhitung.', tags: 'revenue nol kosong 0' },
+      { q: 'Kenapa revenue hari ini Rp 0 padahal ada order?', a: 'Revenue hanya dihitung dari order berstatus "Selesai" (SELESAI) atau "Diambil" (DIAMBIL). Order yang masih Diproses belum masuk hitungan revenue. Ubah status order ke Selesai agar terhitung.', tags: 'revenue nol kosong 0' },
       { q: 'Bagaimana buka laporan lengkap?', a: 'Tekan tautan "Laporan lengkap →" pada kartu Revenue per bulan, atau buka menu Master → Laporan.' },
     ],
   },

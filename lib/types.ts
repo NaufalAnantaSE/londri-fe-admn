@@ -1,7 +1,5 @@
 // ===== Enums (match backend Prisma) =====
-export type OrderStatus =
-  | 'WAITING' | 'PROCESSING' | 'WASHING' | 'DRYING' | 'IRONING'
-  | 'READY_FOR_PICKUP' | 'COMPLETED' | 'CANCELLED';
+export type OrderStatus = 'DI_PROSES' | 'SELESAI' | 'DIAMBIL' | 'CANCELLED';
 export type PaymentMethod = 'CASH' | 'TRANSFER' | 'QRIS' | 'MEMBERSHIP';
 export type MembershipStatus = 'ACTIVE' | 'EXPIRED' | 'BLOCKED';
 export type DiscountType = 'PERCENTAGE' | 'FIXED_AMOUNT';
