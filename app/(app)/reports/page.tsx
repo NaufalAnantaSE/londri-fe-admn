@@ -117,10 +117,12 @@ export default function ReportsPage() {
   });
   const s = statsQuery.data;
 
-  const tickColor = isDark ? '#94a3b8' : '#64748b';
-  const gridColor = isDark ? '#1e293b' : '#f1f5f9';
-  const tooltipStyle = { backgroundColor: isDark ? '#1e293b' : '#fff', border: `1px solid ${isDark ? '#334155' : '#e2e8f0'}`, borderRadius: 12, fontSize: 12 };
-  const tooltipLabelStyle = { color: isDark ? '#e2e8f0' : '#334155', fontWeight: 600 };
+  /* Recharts butuh nilai hex, tidak bisa memakai class Tailwind — jadi token
+     dari tailwind.config.ts direplikasi manual di sini. */
+  const tickColor = isDark ? '#bec8d2' : '#3e4850';        // outline-variant / on-surface-variant
+  const gridColor = isDark ? '#3e4850' : '#f2f3ff';        // surface-container-low
+  const tooltipStyle = { backgroundColor: isDark ? '#2a3040' : '#ffffff', border: `1px solid ${isDark ? '#3e4850' : '#e2e8f0'}`, borderRadius: 12, fontSize: 12 };
+  const tooltipLabelStyle = { color: isDark ? '#eef0ff' : '#151b2b', fontWeight: 600 };
 
   const chartData = useMemo(() => {
     if (!s) return [];
@@ -163,10 +165,10 @@ export default function ReportsPage() {
   }
 
   const kpis = s ? [
-    { label: 'Total Revenue', value: formatRupiah(s.totalRevenue), Icon: TrendUp, color: 'bg-sky-50 dark:bg-sky-950 text-sky-600 dark:text-sky-400' },
-    { label: 'Total Order', value: String(s.totalOrders), Icon: Receipt, color: 'bg-violet-50 dark:bg-violet-950 text-violet-600 dark:text-violet-400' },
-    { label: 'Rata-rata Order', value: formatRupiah(s.avgOrderValue), Icon: Wallet, color: 'bg-amber-50 dark:bg-amber-950 text-amber-600 dark:text-amber-400' },
-    { label: 'Pelanggan Unik', value: String(s.uniqueCustomers), Icon: Users, color: 'bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400' },
+    { label: 'Total Revenue', value: formatRupiah(s.totalRevenue), Icon: TrendUp, color: 'bg-primary-container text-on-primary-container' },
+    { label: 'Total Order', value: String(s.totalOrders), Icon: Receipt, color: 'bg-primary-container text-on-primary-container' },
+    { label: 'Rata-rata Order', value: formatRupiah(s.avgOrderValue), Icon: Wallet, color: 'bg-primary-container text-on-primary-container' },
+    { label: 'Pelanggan Unik', value: String(s.uniqueCustomers), Icon: Users, color: 'bg-primary-container text-on-primary-container' },
   ] : [];
 
   return (
@@ -174,21 +176,21 @@ export default function ReportsPage() {
       <PageHeader title="Laporan" right={
         <div className="relative print:hidden">
           <button onClick={() => setExportOpen((v) => !v)} disabled={!s || !s.totalOrders}
-            className="flex min-h-[40px] items-center gap-1.5 rounded-xl bg-sky-600 px-3 text-sm font-semibold text-white active:bg-sky-700 disabled:opacity-40">
+            className="flex min-h-[40px] items-center gap-1.5 rounded-md bg-primary px-3 font-body-md text-body-md font-semibold text-on-primary transition-colors active:bg-on-primary-container disabled:opacity-40">
             <DownloadSimple size={18} weight="bold" /> Ekspor
           </button>
           {exportOpen && (
             <>
               <div className="fixed inset-0 z-40" onClick={() => setExportOpen(false)} />
-              <div className="glass-strong absolute right-0 top-[46px] z-50 w-44 overflow-hidden rounded-xl border border-white/40 dark:border-slate-700/40 shadow-lg">
-                <button onClick={() => doExport('csv')} className="flex w-full items-center gap-2.5 px-4 py-3 text-sm active:bg-slate-100 dark:active:bg-slate-800">
-                  <FileCsv size={18} className="text-emerald-600" /> CSV
+              <div className="glass-strong absolute right-0 top-[46px] z-50 w-44 overflow-hidden rounded-md border border-border-subtle dark:border-outline-variant/25 shadow-card-hover">
+                <button onClick={() => doExport('csv')} className="flex w-full items-center gap-2.5 px-md py-3 font-body-md text-body-md active:bg-surface-container-low dark:active:bg-white/5">
+                  <FileCsv size={18} className="text-success" /> CSV
                 </button>
-                <button onClick={() => doExport('xlsx')} className="flex w-full items-center gap-2.5 px-4 py-3 text-sm active:bg-slate-100 dark:active:bg-slate-800">
-                  <FileXls size={18} className="text-green-700" /> Excel (.xlsx)
+                <button onClick={() => doExport('xlsx')} className="flex w-full items-center gap-2.5 px-md py-3 font-body-md text-body-md active:bg-surface-container-low dark:active:bg-white/5">
+                  <FileXls size={18} className="text-on-success-container" /> Excel (.xlsx)
                 </button>
-                <button onClick={() => doExport('pdf')} className="flex w-full items-center gap-2.5 px-4 py-3 text-sm active:bg-slate-100 dark:active:bg-slate-800">
-                  <FilePdf size={18} className="text-red-600" /> PDF / Cetak
+                <button onClick={() => doExport('pdf')} className="flex w-full items-center gap-2.5 px-md py-3 font-body-md text-body-md active:bg-surface-container-low dark:active:bg-white/5">
+                  <FilePdf size={18} className="text-error" /> PDF / Cetak
                 </button>
               </div>
             </>
@@ -202,7 +204,7 @@ export default function ReportsPage() {
           <div className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar">
             {PRESETS.map((p) => (
               <button key={p} onClick={() => setPreset(p)}
-                className={`shrink-0 rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors ${preset === p ? 'bg-sky-600 text-white' : 'glass text-slate-600 dark:text-slate-300'}`}>
+                className={`shrink-0 rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors ${preset === p ? 'bg-primary text-on-primary' : 'glass text-on-surface-variant dark:text-outline-variant'}`}>
                 {PERIOD_LABEL[p]}
               </button>
             ))}
@@ -210,28 +212,28 @@ export default function ReportsPage() {
           {preset === 'custom' && (
             <div className="mt-2 grid grid-cols-2 gap-2">
               <label className="block">
-                <span className="mb-1 block text-xs text-slate-500">Dari</span>
+                <span className="mb-1 block font-label-md text-label-md text-on-surface-variant dark:text-outline-variant">Dari</span>
                 <input type="date" value={customFrom} max={customTo || undefined} onChange={(e) => setCustomFrom(e.target.value)}
-                  className="neuo-inset w-full min-h-[42px] rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 text-sm outline-none focus:border-sky-400" />
+                  className="neuo-inset w-full min-h-[42px] rounded-md px-3 font-body-md text-body-md outline-none" />
               </label>
               <label className="block">
-                <span className="mb-1 block text-xs text-slate-500">Sampai</span>
+                <span className="mb-1 block font-label-md text-label-md text-on-surface-variant dark:text-outline-variant">Sampai</span>
                 <input type="date" value={customTo} min={customFrom || undefined} onChange={(e) => setCustomTo(e.target.value)}
-                  className="neuo-inset w-full min-h-[42px] rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 text-sm outline-none focus:border-sky-400" />
+                  className="neuo-inset w-full min-h-[42px] rounded-md px-3 font-body-md text-body-md outline-none" />
               </label>
             </div>
           )}
           {/* Filter cabang */}
           <div className="mt-2 flex items-center gap-2">
-            <Funnel size={16} className="shrink-0 text-slate-400" />
+            <Funnel size={16} className="shrink-0 text-outline dark:text-outline-variant" aria-hidden="true" />
             <select value={branchId} onChange={(e) => setBranchId(e.target.value)}
-              className="neuo-inset min-h-[42px] flex-1 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 text-sm outline-none focus:border-sky-400">
+              className="neuo-inset min-h-[42px] flex-1 rounded-md px-3 font-body-md text-body-md outline-none">
               <option value="">Semua cabang</option>
               {(branches?.items || []).map((b) => <option key={b.id} value={b.id}>{b.name}</option>)}
             </select>
             {branchId && (
               <button onClick={() => setBranchId('')} aria-label="Reset cabang"
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-slate-400 active:bg-slate-200 dark:active:bg-slate-700">
+                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-outline dark:text-outline-variant active:bg-surface-container dark:active:bg-white/10">
                 <X size={16} weight="bold" />
               </button>
             )}
@@ -241,51 +243,51 @@ export default function ReportsPage() {
         {/* Judul cetak (hanya muncul saat print) */}
         <div className="hidden print:block">
           <h1 className="text-2xl font-bold">Laporan Londri POS</h1>
-          <p className="text-sm text-slate-500">
+          <p className="font-body-md text-body-md text-on-surface-variant dark:text-outline-variant">
             Periode {period.from} s/d {period.to}
             {branchId && branches?.items && ` — ${branches.items.find((b) => b.id === branchId)?.name ?? ''}`}
           </p>
         </div>
 
         {customIncomplete ? (
-          <p className="py-16 text-center text-sm text-slate-400">Pilih tanggal dari &amp; sampai untuk menampilkan laporan.</p>
+          <p className="py-16 text-center font-body-md text-body-md text-outline dark:text-outline-variant">Pilih tanggal dari &amp; sampai untuk menampilkan laporan.</p>
         ) : statsQuery.isLoading ? (
-          <p className="py-16 text-center text-sm text-slate-400">Memuat data laporan…</p>
+          <p className="py-16 text-center font-body-md text-body-md text-outline dark:text-outline-variant">Memuat data laporan…</p>
         ) : statsQuery.isError ? (
-          <p className="py-16 text-center text-sm text-red-500">Gagal memuat laporan. Coba lagi.</p>
+          <p role="alert" className="py-16 text-center font-body-md text-body-md text-error">Gagal memuat laporan. Coba lagi.</p>
         ) : s && s.totalOrders === 0 ? (
-          <p className="py-16 text-center text-sm text-slate-400">Tidak ada order pada periode ini.</p>
+          <p className="py-16 text-center font-body-md text-body-md text-outline dark:text-outline-variant">Tidak ada order pada periode ini.</p>
         ) : s ? (
           <>
             {/* KPI */}
             <div className="grid grid-cols-2 gap-3">
               {kpis.map((k) => (
-                <div key={k.label} className="glass rounded-2xl border border-slate-200/60 dark:border-slate-800 p-3.5">
+                <div key={k.label} className="glass rounded-xl border border-border-subtle dark:border-outline-variant/20 p-3.5 shadow-card">
                   <div className={`mb-2.5 flex h-8 w-8 items-center justify-center rounded-xl ${k.color}`}><k.Icon size={16} weight="duotone" /></div>
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400">{k.label}</p>
+                  <p className="font-label-md text-label-md text-on-surface-variant dark:text-outline-variant">{k.label}</p>
                   <p className="mt-0.5 truncate text-base font-bold tabular-nums">{k.value}</p>
                 </div>
               ))}
             </div>
-            <p className="-mt-2 flex items-center gap-1.5 px-1 text-[11px] text-slate-400 dark:text-slate-500">
+            <p className="-mt-2 flex items-center gap-1.5 px-1 font-label-md text-label-md text-outline dark:text-outline-variant">
               <Info size={13} weight="duotone" className="shrink-0" />
               Revenue dihitung dari order berstatus <b className="font-semibold">Selesai</b>. Order yang masih diproses belum terhitung.
             </p>
 
             {/* Tren revenue harian */}
-            <section className="glass rounded-2xl border border-slate-200/60 dark:border-slate-800 p-4">
-              <h2 className="mb-4 flex items-center gap-2 font-semibold"><ChartBar size={18} weight="duotone" className="text-sky-500" /> Revenue harian</h2>
+            <section className="glass rounded-xl border border-border-subtle dark:border-outline-variant/20 p-md shadow-card">
+              <h2 className="mb-4 flex items-center gap-2 font-semibold"><ChartBar size={18} weight="duotone" className="text-primary dark:text-inverse-primary" /> Revenue harian</h2>
               {chartData.some((d) => d.revenue > 0) ? (
                 <ResponsiveContainer width="100%" height={200}>
                   <BarChart data={chartData} margin={{ top: 5, right: 5, left: 5, bottom: 0 }}>
                     <CartesianGrid vertical={false} stroke={gridColor} />
                     <XAxis dataKey="name" fontSize={10} tick={{ fill: tickColor }} axisLine={false} tickLine={false} interval="preserveStartEnd" />
                     <YAxis hide />
-                    <Tooltip formatter={(v) => formatRupiah(Number(v))} contentStyle={tooltipStyle} labelStyle={tooltipLabelStyle} cursor={{ fill: isDark ? '#1e293b' : '#f1f5f9' }} />
-                    <Bar dataKey="revenue" fill="#0ea5e9" radius={[4, 4, 0, 0]} />
+                    <Tooltip formatter={(v) => formatRupiah(Number(v))} contentStyle={tooltipStyle} labelStyle={tooltipLabelStyle} cursor={{ fill: isDark ? '#3e4850' : '#f2f3ff' }} />
+                    <Bar dataKey="revenue" fill="#006591" radius={[4, 4, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
-              ) : <p className="py-10 text-center text-sm text-slate-400">Belum ada revenue pada periode ini</p>}
+              ) : <p className="py-10 text-center font-body-md text-body-md text-outline dark:text-outline-variant">Belum ada revenue pada periode ini</p>}
             </section>
 
             {/* Breakdown metode pembayaran */}
@@ -296,14 +298,14 @@ export default function ReportsPage() {
             <BreakdownCard title="Per kasir" rows={s.byCashier} total={s.totalRevenue} limit={5} />
 
             {/* Tabel transaksi */}
-            <section className="glass overflow-hidden rounded-2xl border border-slate-200/60 dark:border-slate-800">
-              <h2 className="border-b border-slate-200/60 dark:border-slate-800 px-4 py-3 font-semibold">
-                Transaksi <span className="text-xs font-normal text-slate-400">({s.orders.length})</span>
+            <section className="glass overflow-hidden rounded-xl border border-border-subtle dark:border-outline-variant/20 shadow-card">
+              <h2 className="card-head px-md py-3 font-headline-md text-headline-md">
+                Transaksi <span className="font-label-md text-label-md font-normal text-outline dark:text-outline-variant">({s.orders.length})</span>
               </h2>
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="text-left text-xs text-slate-400">
+                    <tr className="text-left font-label-md text-label-md text-on-surface-variant dark:text-outline-variant">
                       <th className="px-4 py-2 font-medium">Invoice</th>
                       <th className="px-4 py-2 font-medium">Pelanggan</th>
                       <th className="px-4 py-2 font-medium">Status</th>
@@ -312,17 +314,17 @@ export default function ReportsPage() {
                   </thead>
                   <tbody>
                     {s.orders.slice(0, 50).map((o) => (
-                      <tr key={o.id} className="border-t border-slate-100 dark:border-slate-800">
+                      <tr key={o.id} className="border-t border-border-subtle dark:border-outline-variant/20">
                         <td className="px-4 py-2.5 font-mono text-xs">{o.invoiceNumber}</td>
                         <td className="px-4 py-2.5"><span className="block max-w-[120px] truncate">{o.customerName}</span></td>
-                        <td className="px-4 py-2.5 text-xs text-slate-500">{STATUS_LABEL[o.status]}</td>
+                        <td className="px-md py-2.5 font-label-md text-label-md text-on-surface-variant dark:text-outline-variant">{STATUS_LABEL[o.status]}</td>
                         <td className="px-4 py-2.5 text-right tabular-nums">{formatRupiah(o.totalAmount)}</td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
                 {s.orders.length > 50 && (
-                  <p className="px-4 py-3 text-center text-xs text-slate-400">
+                  <p className="px-md py-3 text-center font-label-md text-label-md text-outline dark:text-outline-variant">
                     Menampilkan 50 dari {s.orders.length} transaksi. Ekspor untuk data lengkap.
                   </p>
                 )}
@@ -345,7 +347,7 @@ function BreakdownCard({ title, rows, total, mode = 'revenue', limit }: {
   const shown = limit ? rows.slice(0, limit) : rows;
   if (!shown.length) return null;
   return (
-    <section className="glass rounded-2xl border border-slate-200/60 dark:border-slate-800 p-4">
+    <section className="glass rounded-xl border border-border-subtle dark:border-outline-variant/20 p-md shadow-card">
       <h2 className="mb-3 font-semibold">{title}</h2>
       <div className="space-y-3">
         {shown.map((r) => {
@@ -358,10 +360,10 @@ function BreakdownCard({ title, rows, total, mode = 'revenue', limit }: {
                 <span className="shrink-0 tabular-nums font-semibold">
                   {mode === 'revenue' ? formatRupiah(r.revenue) : `${r.count}`}
                 </span>
-                <span className="w-9 shrink-0 text-right text-xs text-slate-400 tabular-nums">{pct}%</span>
+                <span className="w-9 shrink-0 text-right font-data-tabular text-data-tabular text-on-surface-variant dark:text-outline-variant tabular-nums">{pct}%</span>
               </div>
-              <div className="h-1.5 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
-                <div className="h-full rounded-full bg-sky-500" style={{ width: `${pct}%` }} />
+              <div className="h-1.5 overflow-hidden rounded-full bg-surface-container dark:bg-white/10">
+                <div className="h-full rounded-full bg-primary" style={{ width: `${pct}%` }} />
               </div>
             </div>
           );

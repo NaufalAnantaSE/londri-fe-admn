@@ -38,8 +38,8 @@ export const viewport: Viewport = {
   initialScale: 1,
   viewportFit: "cover",
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f8fafc" },
-    { media: "(prefers-color-scheme: dark)", color: "#0f172a" },
+    { media: "(prefers-color-scheme: light)", color: "#faf8ff" },
+    { media: "(prefers-color-scheme: dark)", color: "#2a3040" },
   ],
 };
 
@@ -49,10 +49,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <ThemeScript />
       </head>
-      <body className={`${jakarta.variable} ${spaceGrotesk.variable} font-sans bg-slate-100 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased`}>
+      <body className={`${jakarta.variable} ${spaceGrotesk.variable} font-sans bg-surface dark:bg-on-surface text-on-surface dark:text-inverse-on-surface antialiased`}>
         <Providers>
-          <div className="relative mx-auto min-h-[100dvh] max-w-md overflow-x-clip bg-slate-300 dark:bg-slate-800 shadow-sm">
-            <div className="app-ambient" aria-hidden="true" />
+          {/* Level 0 — flat. The app column shares the page surface; separation
+              on wide viewports comes from a hairline rule, not a darker fill. */}
+          <div className="relative mx-auto min-h-[100dvh] max-w-max-mobile-width overflow-x-clip bg-surface dark:bg-inverse-surface md:border-x md:border-border-subtle md:dark:border-outline-variant/20">
             <div className="relative z-[1]">{children}</div>
           </div>
         </Providers>

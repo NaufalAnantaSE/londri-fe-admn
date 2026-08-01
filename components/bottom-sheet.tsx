@@ -37,7 +37,7 @@ export default function BottomSheet({ open, onClose, title, children }: {
         style={{ transitionDuration: '250ms' }}
       >
         <div className="glass-strong sticky top-0 px-5 pb-2 pt-3">
-          <div className="mx-auto mb-3 h-1.5 w-10 rounded-full bg-slate-300 dark:bg-slate-600" />
+          <div className="mx-auto mb-3 h-1.5 w-10 rounded-full bg-outline-variant dark:bg-outline" />
           {title && <h2 className="text-base font-semibold">{title}</h2>}
         </div>
         <div className="px-5 pb-6">{children}</div>

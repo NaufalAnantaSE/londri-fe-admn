@@ -29,31 +29,31 @@ export default function SettingsPage() {
     <>
       <PageHeader title="Pengaturan" />
       <div className="space-y-4 p-4">
-        <div className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+        <div className="rounded-xl border border-border-subtle dark:border-outline-variant/20 bg-surface-container-lowest dark:bg-inverse-surface p-5 shadow-card">
           <div className="flex items-center gap-4">
-            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-sky-600 text-xl font-bold text-white shadow-md shadow-sky-600/25">
+            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary font-headline-lg text-headline-lg font-bold text-on-primary">
               {(me?.username || 'A')[0].toUpperCase()}
             </div>
             <div>
               <p className="font-semibold">{me?.username || '…'}</p>
-              <p className="text-sm text-slate-500 dark:text-slate-400">{me?.role || 'Super Admin'}</p>
+              <p className="font-body-md text-body-md text-on-surface-variant dark:text-outline-variant">{me?.role || 'Super Admin'}</p>
             </div>
           </div>
         </div>
 
-        <div className="rounded-2xl border border-slate-100 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
-          <h3 className="mb-3 text-sm font-semibold text-slate-500 dark:text-slate-400">Tema Tampilan</h3>
+        <div className="rounded-xl border border-border-subtle dark:border-outline-variant/20 bg-surface-container-lowest dark:bg-inverse-surface p-5 shadow-card">
+          <h3 className="mb-3 font-label-md text-label-md font-semibold uppercase tracking-wide text-on-surface-variant dark:text-outline-variant">Tema Tampilan</h3>
           <div className="grid grid-cols-3 gap-2">
             {THEME_OPTIONS.map((opt) => (
               <button key={opt.value} onClick={() => setTheme(opt.value)}
                 className={`flex min-h-[64px] flex-col items-center justify-center gap-1.5 rounded-xl border-2 transition-colors ${
                   theme === opt.value
-                    ? 'border-sky-500 bg-sky-50 dark:border-sky-500 dark:bg-sky-950'
-                    : 'border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800'
+                    ? 'border-primary bg-primary-container'
+                    : 'border-border-subtle bg-surface-container-lowest dark:border-outline-variant/25 dark:bg-inverse-surface'
                 }`}>
                 <opt.Icon size={24} weight="duotone" />
                 <span className={`text-xs font-medium ${
-                  theme === opt.value ? 'text-sky-600 dark:text-sky-400' : 'text-slate-600 dark:text-slate-400'
+                  theme === opt.value ? 'text-on-primary-container' : 'text-on-surface-variant dark:text-outline-variant'
                 }`}>{opt.label}</span>
               </button>
             ))}
@@ -61,23 +61,23 @@ export default function SettingsPage() {
         </div>
 
         <Link href="/help"
-          className="flex items-center gap-3 rounded-2xl border border-slate-100 bg-white p-4 shadow-sm active:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 dark:active:bg-slate-800">
-          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-100 text-sky-600 dark:bg-sky-950 dark:text-sky-400">
+          className="flex items-center gap-3 rounded-xl border border-border-subtle dark:border-outline-variant/20 bg-surface-container-lowest dark:bg-inverse-surface p-md shadow-card active:bg-surface-container-low dark:active:bg-white/5">
+          <span className="flex h-10 w-10 items-center justify-center rounded-md bg-primary-container text-on-primary-container">
             <Question size={20} weight="duotone" />
           </span>
           <div className="flex-1">
             <p className="font-medium">Bantuan &amp; Panduan</p>
-            <p className="text-xs text-slate-400 dark:text-slate-500">Cara pakai tiap fitur & FAQ</p>
+            <p className="font-label-md text-label-md text-on-surface-variant dark:text-outline-variant">Cara pakai tiap fitur & FAQ</p>
           </div>
-          <CaretRight size={18} className="text-slate-300 dark:text-slate-600" />
+          <CaretRight size={18} className="text-outline dark:text-outline-variant" aria-hidden="true" />
         </Link>
 
         <button onClick={() => logoutMutation.mutate()} disabled={logoutMutation.isPending}
-          className="min-h-[48px] w-full rounded-xl bg-red-50 font-semibold text-red-600 active:bg-red-100 disabled:opacity-50 dark:bg-red-950 dark:text-red-400 dark:active:bg-red-900">
+          className="min-h-[48px] w-full rounded-md bg-error-container font-semibold text-on-error-container transition-opacity active:opacity-80 disabled:opacity-50">
           {logoutMutation.isPending ? 'Keluar…' : 'Keluar'}
         </button>
 
-        <p className="pt-2 text-center text-xs text-slate-400 dark:text-slate-500">Londri POS Superadmin · v0.1.0</p>
+        <p className="pt-2 text-center font-label-md text-label-md text-outline dark:text-outline-variant">Londri POS Superadmin · v0.1.0</p>
       </div>
     </>
   );

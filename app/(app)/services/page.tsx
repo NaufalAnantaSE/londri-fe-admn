@@ -28,16 +28,16 @@ export default function ServicesPage() {
       toPayload={(f) => ({ name: f.name, price: Number(f.price), type: f.type, estimatedHours: Number(f.estimatedHours), description: f.description || null, isActive: !!f.isActive })}
       fromItem={(s) => ({ name: s.name, price: s.price, type: s.type, estimatedHours: String(s.estimatedHours), description: s.description || '', isActive: s.isActive })}
       renderCard={(s, { edit, remove }) => (
-        <div className="flex items-start justify-between gap-2 rounded-2xl border border-slate-100 dark:border-slate-800 glass p-4 shadow-sm">
+        <div className="flex items-start justify-between gap-2 rounded-xl border border-border-subtle dark:border-outline-variant/20 glass p-md shadow-card">
           <div>
             <div className="flex items-center gap-2">
               <p className="font-semibold">{s.name}</p>
-              {!s.isActive && <span className="rounded-full bg-slate-100 dark:bg-slate-950 px-2 py-0.5 text-[10px] font-bold text-slate-400 dark:text-slate-500">NONAKTIF</span>}
+              {!s.isActive && <span className="chip chip-neutral">NONAKTIF</span>}
             </div>
-            <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{formatRupiah(s.price)} · {s.type}</p>
-            <p className="text-xs text-slate-400 dark:text-slate-500">Estimasi {s.estimatedHours} jam</p>
+            <p className="mt-1 font-body-md text-body-md text-on-surface-variant dark:text-outline-variant">{formatRupiah(s.price)} · {s.type}</p>
+            <p className="font-label-md text-label-md text-outline dark:text-outline-variant">Estimasi {s.estimatedHours} jam</p>
           </div>
-          <CardActions onEdit={edit} onRemove={remove} />
+          <CardActions onEdit={edit} onDelete={remove} />
         </div>
       )}
     />

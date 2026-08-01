@@ -1,14 +1,16 @@
 'use client';
-import { PencilSimple, TrashSimple } from '@phosphor-icons/react';
+import { PencilSimple, Trash } from '@phosphor-icons/react';
 
-export default function CardActions({ onEdit, onRemove }: { onEdit: () => void; onRemove: () => void }) {
+export default function CardActions({ onEdit, onDelete }: { onEdit: () => void; onDelete: () => void }) {
   return (
-    <div className="flex shrink-0 gap-1">
-      <button onClick={onEdit} aria-label="Ubah" className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-500 dark:text-slate-400 active:bg-slate-100 dark:active:bg-slate-700">
-        <PencilSimple size={17} weight="duotone" />
+    <div className="flex gap-1">
+      <button type="button" onClick={onEdit} aria-label="Ubah"
+        className="flex h-9 w-9 items-center justify-center rounded-full text-on-surface-variant active:bg-surface-container-low dark:active:bg-white/5">
+        <PencilSimple size={18} />
       </button>
-      <button onClick={onRemove} aria-label="Hapus" className="flex h-10 w-10 items-center justify-center rounded-xl bg-red-50 dark:bg-red-950 text-red-500 active:bg-red-100 dark:active:bg-red-900">
-        <TrashSimple size={17} weight="duotone" />
+      <button type="button" onClick={onDelete} aria-label="Hapus"
+        className="flex h-9 w-9 items-center justify-center rounded-full text-error active:bg-error-container/50 dark:active:bg-white/5">
+        <Trash size={18} />
       </button>
     </div>
   );

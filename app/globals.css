@@ -2,9 +2,32 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Hallmark · genre: modern-minimal · design-system: in-place · designed-as-app
-   Type pairing (2+1): display = Space Grotesk (--font-display), body = Plus Jakarta.
-   Headings & the app wordmark pick up the display face; body stays Jakarta. */
+/* Hallmark · genre: modern-minimal · design-system: Stitch "Refined Glass"
+ * source: Downloads/stitch_full_prd_implementation/refined_glass/DESIGN.md
+ * pre-emit critique: P4 H5 E5 S5 R5 V4
+ *
+ * WHAT CHANGED FROM THE PREVIOUS THEME, AND WHY
+ *
+ * The prior theme stacked three effects that fought each other:
+ *   .app-ambient   three radial blooms behind the column
+ *   .glass         frosted surface + double neomorphic shadow at !important
+ *   .neuo-inset    carved-in inputs
+ *
+ * Stitch's reference screenshots show almost none of that despite the theme
+ * being *named* "Refined Glass". DESIGN.md is explicit: glass is reserved for
+ * chrome ("headers and navigation") and the elevation section says outright
+ * "avoid heavy shadows; rely on borders and subtle background shifts".
+ *
+ * So: the ambient layer is gone, cards are flat white with a hairline border
+ * and a 4%-opacity ambient shadow, and the frost survives ONLY on fixed chrome
+ * (header / bottom nav / sheets) where content genuinely scrolls underneath —
+ * which is the one place blur communicates depth instead of decorating.
+ *
+ * `.glass` and `.neuo-inset` are intentionally kept as class NAMES and
+ * redefined here rather than deleted. 44 call sites across 30 files pick up
+ * the new look with no markup edits, and no half-migrated intermediate state.
+ */
+
 @layer base {
   h1, h2, h3 {
     font-family: var(--font-display), var(--font-jakarta), system-ui, sans-serif;
@@ -13,10 +36,21 @@
   .font-display {
     font-family: var(--font-display), var(--font-jakarta), system-ui, sans-serif;
   }
-  /* Tabular figures render in the display face — grotesk numerals read as data. */
   .tabular-nums {
     font-family: var(--font-display), var(--font-jakarta), system-ui, sans-serif;
     font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+  }
+
+  /* Focus rings appear INSTANTLY — never transitioned. A ring that fades in
+     leaves keyboard users with no indicator for the first 200ms. */
+  :where(a, button, input, select, textarea, [tabindex]):focus-visible {
+    outline: 2px solid theme("colors.primary");
+    outline-offset: 2px;
+    border-radius: 0.5rem;
+  }
+  .dark :where(a, button, input, select, textarea, [tabindex]):focus-visible {
+    outline-color: theme("colors.primary-fixed-dim");
   }
 }
 
@@ -24,82 +58,104 @@ html, body {
   overflow-x: clip;
 }
 
-/* Hallmark · genre: atmospheric-glass — frosted surfaces over a low ambient backdrop.
-   Glass earns its place here: the ambient layer (.app-ambient) sits behind the
-   column so every frosted surface has colour to refract. Without a backdrop,
-   glass is decoration; with one, it communicates depth. */
-@layer components {
-  /* Ambient backdrop — two restrained blooms, fixed, no motion. This is the
-     "content behind glass" that justifies the frost. */
-  .app-ambient {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    background:
-      radial-gradient(42rem 30rem at 15% -5%, rgba(14, 165, 233, 0.22), transparent 60%),
-      radial-gradient(38rem 28rem at 100% 8%, rgba(99, 102, 241, 0.18), transparent 62%),
-      radial-gradient(34rem 26rem at 50% 108%, rgba(56, 189, 248, 0.16), transparent 60%);
-  }
-  .dark .app-ambient {
-    background:
-      radial-gradient(42rem 30rem at 15% -5%, rgba(14, 165, 233, 0.20), transparent 60%),
-      radial-gradient(38rem 28rem at 100% 8%, rgba(99, 102, 241, 0.22), transparent 62%),
-      radial-gradient(34rem 26rem at 50% 108%, rgba(56, 189, 248, 0.14), transparent 60%);
-  }
-
-  /* Frosted surface tokens. `-strong` for chrome that overlaps content
-     (header, nav, sheets); base for resting cards. */
-  .glass {
-    background-color: rgba(255, 255, 255, 0.78);
-    backdrop-filter: blur(16px) saturate(160%);
-    -webkit-backdrop-filter: blur(16px) saturate(160%);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    border-top-color: rgba(255, 255, 255, 0.95);
-    border-left-color: rgba(255, 255, 255, 0.8);
-    /* Neuomorphic extrusion — light highlight top-left, soft shadow bottom-right.
-       Cards read as gently raised pillows of frosted glass. !important so it
-       wins over the leftover `shadow-sm` utility on card elements. */
-    box-shadow:
-      -7px -7px 14px rgba(255, 255, 255, 0.95),
-      9px 9px 20px rgba(51, 65, 85, 0.30) !important;
-  }
-  .dark .glass {
-    background-color: rgba(15, 23, 42, 0.85);
-    border-color: rgba(203, 213, 225, 0.10);
-    border-top-color: rgba(203, 213, 225, 0.22);
-    border-left-color: rgba(203, 213, 225, 0.16);
-    box-shadow:
-      -8px -8px 16px rgba(51, 65, 85, 0.55),
-      10px 10px 22px rgba(0, 0, 0, 0.9) !important;
-  }
-  .glass-strong {
-    background-color: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(20px) saturate(170%);
-    -webkit-backdrop-filter: blur(20px) saturate(170%);
-  }
-  .dark .glass-strong {
-    background-color: rgba(15, 23, 42, 0.6);
-  }
-
-  /* Neuomorphic inset — pressed / carved-in feel for inputs, textareas, selects.
-     Focus rings (utilities) intentionally override this on :focus for a11y. */
-  .neuo-inset {
-    box-shadow:
-      inset 3px 3px 6px rgba(100, 116, 139, 0.30),
-      inset -3px -3px 6px rgba(255, 255, 255, 0.85);
-  }
-  .dark .neuo-inset {
-    box-shadow:
-      inset 3px 3px 6px rgba(2, 6, 23, 0.7),
-      inset -3px -3px 6px rgba(148, 163, 184, 0.10);
-  }
+/* Level 0 — flat. The ambient bloom layer is deliberately not reinstated;
+   .app-ambient is neutralised rather than removed so any stale JSX still
+   referencing it renders nothing instead of breaking layout. */
+.app-ambient {
+  display: none;
 }
 
-/* Graceful fallback: browsers without backdrop-filter get an opaque surface. */
+@layer components {
+  /* ── Level 1 · resting surfaces ───────────────────────────────────
+     Flat white, 1px border, barely-there ambient shadow. This is the
+     workhorse: cards, list rows, panels. */
+  .glass {
+    background-color: theme("colors.surface-container-lowest");
+    border: 1px solid theme("colors.border-subtle");
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .dark .glass {
+    background-color: theme("colors.inverse-surface");
+    border-color: theme("colors.outline-variant" / 20%);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  }
+
+  /* ── Level 2 · glass chrome ───────────────────────────────────────
+     The ONLY place frost is kept. Fixed header / bottom nav / sheets have
+     real content moving beneath them, so the blur reports depth rather than
+     decorating a static surface. DESIGN.md specifies 16–20px. */
+  .glass-strong {
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(18px) saturate(150%);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    border-color: theme("colors.border-subtle");
+    box-shadow: none;
+  }
+  .dark .glass-strong {
+    background-color: rgba(42, 48, 64, 0.8);
+    border-color: theme("colors.outline-variant" / 20%);
+  }
+
+  /* ── Inputs ───────────────────────────────────────────────────────
+     Was a carved-in neomorphic well. DESIGN.md: "1px #E2E8F0 border that
+     transitions to a 2px Sky-600 border on focus". Kept under the old class
+     name so existing markup migrates for free. */
+  .neuo-inset {
+    background-color: theme("colors.surface-container-lowest");
+    border: 1px solid theme("colors.border-subtle");
+    box-shadow: none;
+    transition: border-color 150ms ease-out, box-shadow 150ms ease-out;
+  }
+  .neuo-inset:focus,
+  .neuo-inset:focus-within {
+    border-color: theme("colors.primary");
+    box-shadow: 0 0 0 1px theme("colors.primary");
+  }
+  .dark .neuo-inset {
+    background-color: theme("colors.inverse-surface");
+    border-color: theme("colors.outline-variant" / 25%);
+  }
+
+  /* ── Card header strip ────────────────────────────────────────────
+     DESIGN.md: "Header areas within cards should use a subtle #F1F5F9
+     background to separate titles from content." */
+  .card-head {
+    background-color: theme("colors.surface-container-low");
+    border-bottom: 1px solid theme("colors.border-subtle");
+  }
+  .dark .card-head {
+    background-color: rgba(255, 255, 255, 0.04);
+    border-bottom-color: theme("colors.outline-variant" / 20%);
+  }
+
+  /* ── Status chips ─────────────────────────────────────────────────
+     Light tint of the status hue + high-contrast text on top, per
+     DESIGN.md § Chips & Badges. 8px radius. */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.125rem 0.5rem;
+    border-radius: 0.5rem;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+  }
+  .chip-success { background-color: theme("colors.success-container"); color: theme("colors.on-success-container"); }
+  .chip-warning { background-color: theme("colors.warning-container"); color: theme("colors.on-warning-container"); }
+  .chip-error   { background-color: theme("colors.error-container");   color: theme("colors.on-error-container"); }
+  .chip-info    { background-color: theme("colors.primary-container"); color: theme("colors.on-primary-container"); }
+  .chip-neutral { background-color: theme("colors.surface-container");  color: theme("colors.on-surface-variant"); }
+}
+
+/* Browsers without backdrop-filter get an opaque chrome surface. */
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .glass, .glass-strong { background-color: rgba(255, 255, 255, 0.92); }
-  .dark .glass, .dark .glass-strong { background-color: rgba(15, 23, 42, 0.92); }
+  .glass-strong { background-color: rgba(255, 255, 255, 0.97); }
+  .dark .glass-strong { background-color: rgba(42, 48, 64, 0.97); }
 }
 
 body {
@@ -137,22 +193,27 @@ html.theme-transition body {
 }
 .animate-fade-in { animation: fade-in 0.2s ease-out; }
 
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 /* ===== Cetak / ekspor PDF (halaman Laporan) =====
-   Sembunyikan chrome aplikasi, ratakan glass jadi kartu putih bersih,
+   Sembunyikan chrome aplikasi, ratakan surface jadi kartu putih bersih,
    dan buang batas lebar mobile agar tabel muat di kertas. */
 @media print {
-  /* Sembunyikan navigasi, backdrop, dan elemen ber-tag print:hidden */
   nav, .app-ambient, .print\:hidden { display: none !important; }
-  /* Header aplikasi (sticky) tidak perlu dicetak */
   header.glass-strong { display: none !important; }
 
   html, body { background: #fff !important; }
-  /* Kolom app: buang max-width & background gelap, gunakan seluruh halaman */
   body > * { background: transparent !important; }
   .max-w-md { max-width: 100% !important; }
   main { padding-bottom: 0 !important; }
 
-  /* Glass → kartu putih rata dengan garis tipis, tanpa blur/shadow */
   .glass, .glass-strong {
     background: #fff !important;
     box-shadow: none !important;
@@ -161,7 +222,6 @@ html.theme-transition body {
     -webkit-backdrop-filter: none !important;
     break-inside: avoid;
   }
-  /* Warna teks dipaksa gelap agar terbaca di kertas */
   * { color: #0f172a !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .print\:block { display: block !important; }
   @page { margin: 1.4cm; }

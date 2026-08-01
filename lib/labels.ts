@@ -1,29 +1,69 @@
 import type { OrderStatus, PaymentMethod, MembershipStatus } from '@/lib/types';
 
+/* Warna status — token Stitch "Refined Glass".
+ *
+ * Sebelumnya tiap status punya hue sendiri (sky/blue/amber/violet/teal/emerald):
+ * tujuh warna pelangi untuk satu sumbu data. Warna yang berbeda seharusnya
+ * berarti KATEGORI yang berbeda, bukan sekadar langkah yang berbeda — kalau
+ * setiap langkah diberi hue baru, warna berhenti bermakna dan tinggal jadi
+ * dekorasi.
+ *
+ * Sekarang badge memetakan lima kategori yang benar-benar berbeda maknanya
+ * bagi kasir:
+ *
+ *   netral   menunggu, belum disentuh
+ *   info     sedang dikerjakan (4 tahap: proses/cuci/kering/setrika)
+ *   warning  butuh tindakan — pelanggan harus dihubungi
+ *   sukses   selesai
+ *   error    dibatalkan
+ *
+ * Tahap spesifik tetap terbaca dari STATUS_LABEL di dalam badge, dan urutan
+ * progresinya tetap terlihat pada STATUS_DOT di timeline. Jadi tidak ada
+ * informasi yang hilang — yang hilang hanya kebisingannya.
+ */
+
+const NEUTRAL = 'bg-surface-container text-on-surface-variant dark:bg-white/10 dark:text-outline-variant';
+const INFO    = 'bg-primary-container text-on-primary-container dark:bg-primary/25 dark:text-primary-fixed';
+const WARNING = 'bg-warning-container text-on-warning-container dark:bg-warning/25 dark:text-warning-container';
+const SUCCESS = 'bg-success-container text-on-success-container dark:bg-success/25 dark:text-success-container';
+const ERROR   = 'bg-error-container text-on-error-container dark:bg-error/25 dark:text-error-container';
+
 export const STATUS_BADGE: Record<OrderStatus, string> = {
-  WAITING: 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300',
-  PROCESSING: 'bg-sky-100 text-sky-700 dark:bg-sky-950 dark:text-sky-400',
-  WASHING: 'bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-400',
-  DRYING: 'bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-400',
-  IRONING: 'bg-violet-100 text-violet-700 dark:bg-violet-950 dark:text-violet-400',
-  READY_FOR_PICKUP: 'bg-teal-100 text-teal-700 dark:bg-teal-950 dark:text-teal-400',
-  COMPLETED: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400',
-  CANCELLED: 'bg-red-100 text-red-600 dark:bg-red-950 dark:text-red-400',
+  WAITING: NEUTRAL,
+  PROCESSING: INFO,
+  WASHING: INFO,
+  DRYING: INFO,
+  IRONING: INFO,
+  READY_FOR_PICKUP: WARNING,
+  COMPLETED: SUCCESS,
+  CANCELLED: ERROR,
 };
-// Warna titik timeline (bukan class Tailwind — dipakai inline hex agar konsisten dgn badge)
+
+/* Titik timeline — hex inline (bukan class Tailwind) karena dipakai sebagai
+ * style pada elemen SVG/absolute. Di sinilah progresi tahap memang relevan,
+ * jadi keempat tahap pengerjaan memakai ramp hue-198 yang menggelap: pembaca
+ * melihat kemajuan tanpa perlu tujuh hue berbeda. */
 export const STATUS_DOT: Record<OrderStatus, string> = {
-  WAITING: '#94a3b8', PROCESSING: '#0ea5e9', WASHING: '#3b82f6', DRYING: '#f59e0b',
-  IRONING: '#8b5cf6', READY_FOR_PICKUP: '#14b8a6', COMPLETED: '#10b981', CANCELLED: '#f87171',
+  WAITING: '#bec8d2',           // outline-variant — belum mulai
+  PROCESSING: '#89ceff',        // ramp 198 · paling terang
+  WASHING: '#4facdb',
+  DRYING: '#1a86bd',
+  IRONING: '#006591',           // ramp 198 · primary, tahap terakhir pengerjaan
+  READY_FOR_PICKUP: '#b45309',  // warning — butuh tindakan
+  COMPLETED: '#047857',         // success
+  CANCELLED: '#dc2626',         // error
 };
+
 export const STATUS_LABEL: Record<OrderStatus, string> = {
   WAITING: 'Menunggu', PROCESSING: 'Diproses', WASHING: 'Dicuci', DRYING: 'Dikeringkan',
   IRONING: 'Disetrika', READY_FOR_PICKUP: 'Siap Diambil', COMPLETED: 'Selesai', CANCELLED: 'Dibatalkan',
 };
 export const PAYMENT_LABEL: Record<PaymentMethod, string> = { CASH: 'Tunai', TRANSFER: 'Transfer', QRIS: 'QRIS', MEMBERSHIP: 'Membership' };
 export const ORDER_FLOW: OrderStatus[] = ['WAITING', 'PROCESSING', 'WASHING', 'DRYING', 'IRONING', 'READY_FOR_PICKUP', 'COMPLETED'];
+
 export const MEMBER_BADGE: Record<MembershipStatus, string> = {
-  ACTIVE: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400',
-  EXPIRED: 'bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-400',
-  BLOCKED: 'bg-red-100 text-red-600 dark:bg-red-950 dark:text-red-400',
+  ACTIVE: SUCCESS,
+  EXPIRED: WARNING,
+  BLOCKED: ERROR,
 };
 export const MEMBER_LABEL: Record<MembershipStatus, string> = { ACTIVE: 'Aktif', EXPIRED: 'Kedaluwarsa', BLOCKED: 'Diblokir' };

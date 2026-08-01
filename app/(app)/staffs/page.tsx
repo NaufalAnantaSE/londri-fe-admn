@@ -42,18 +42,33 @@ export default function StaffsPage() {
       }}
       fromItem={(s) => ({ fullName: s.fullName, username: s.username, password: '', branchId: s.branchId, roleId: s.roleId, phoneNumber: s.phoneNumber || '', address: s.address || '', isActive: s.isActive })}
       renderCard={(s, { edit, remove }) => (
-        <div className="flex items-start justify-between gap-2 rounded-2xl border border-slate-100 dark:border-slate-800 glass p-4 shadow-sm">
-          <div>
-            <div className="flex items-center gap-2">
-              <p className="font-semibold">{s.fullName}</p>
-              <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${s.isActive ? 'bg-emerald-50 dark:bg-emerald-950 text-emerald-600' : 'bg-slate-100 dark:bg-slate-950 text-slate-400 dark:text-slate-500'}`}>
-                {s.isActive ? 'AKTIF' : 'NONAKTIF'}
+        <div className={`overflow-hidden rounded-xl border border-border-subtle dark:border-outline-variant/20 shadow-card ${!s.isActive ? 'opacity-60' : ''}`}>
+          {/* Top: avatar + name + status */}
+          <div className="flex items-center justify-between px-md py-3">
+            <div className="flex items-center gap-3">
+              <span className={`flex h-10 w-10 items-center justify-center rounded-full text-xs font-bold ${s.isActive ? 'bg-primary-container/10 text-primary' : 'bg-surface-container text-on-surface-variant'}`}>
+                {s.fullName.split(' ').filter(Boolean).slice(0, 2).map((w) => w[0].toUpperCase()).join('')}
               </span>
+              <div>
+                <p className="font-semibold">{s.fullName}</p>
+                <p className="font-body-md text-body-md text-secondary dark:text-outline-variant">{s.role?.name}</p>
+              </div>
             </div>
-            <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">@{s.username} · {s.role?.name}</p>
-            <p className="text-sm text-slate-400 dark:text-slate-500">{s.branch?.name}</p>
+            <span className={`chip font-bold ${s.isActive ? 'chip-success' : 'chip-neutral'}`}>
+              {s.isActive ? 'Aktif' : 'Nonaktif'}
+            </span>
           </div>
-          <CardActions onEdit={edit} onRemove={remove} />
+          {/* Divider */}
+          <div className="border-t border-border-subtle dark:border-outline-variant/20" />
+          {/* Bottom: branch meta */}
+          <div className="flex items-center justify-between px-md py-3">
+            <div className="flex items-center gap-1.5">
+              <span className="material-symbols-outlined text-[14px] text-outline dark:text-outline-variant">storefront</span>
+              <span className="font-label-md text-label-md text-outline dark:text-outline-variant">Branch</span>
+              <span className="font-body-md text-body-md font-medium">{s.branch?.name}</span>
+            </div>
+            <CardActions onEdit={edit} onDelete={remove} />
+          </div>
         </div>
       )}
     />
