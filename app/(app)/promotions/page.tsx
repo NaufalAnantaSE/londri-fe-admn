@@ -43,18 +43,18 @@ export default function PromotionsPage() {
         startDate: p.startDate.slice(0, 10), endDate: p.endDate.slice(0, 10), isActive: p.isActive,
       })}
       renderCard={(p, { edit, remove }) => (
-        <div className="flex items-start justify-between gap-2 rounded-2xl border border-slate-100 dark:border-slate-800 glass p-4 shadow-sm">
+        <div className="flex items-start justify-between gap-2 rounded-xl border border-border-subtle dark:border-outline-variant/20 glass p-md shadow-card">
           <div>
             <div className="flex items-center gap-2">
-              <span className="rounded-md bg-sky-50 dark:bg-sky-950 px-2 py-1 text-xs font-bold text-sky-600">{p.code}</span>
-              {!p.isActive && <span className="rounded-full bg-slate-100 dark:bg-slate-950 px-2 py-0.5 text-[10px] font-bold text-slate-400 dark:text-slate-500">NONAKTIF</span>}
+              <span className="chip chip-info font-bold">{p.code}</span>
+              {!p.isActive && <span className="chip chip-neutral font-bold">NONAKTIF</span>}
             </div>
             <p className="mt-2 font-semibold">{p.name}</p>
-            <p className="text-sm text-slate-500 dark:text-slate-400">
+            <p className="font-body-md text-body-md text-on-surface-variant dark:text-outline-variant">
               {p.discountType === 'PERCENTAGE' ? `${Number(p.discountValue)}%` : formatRupiah(p.discountValue)}
               {' '}· min. {formatRupiah(p.minimumPurchase)}
             </p>
-            <p className="text-xs text-slate-400 dark:text-slate-500">{formatTanggal(p.startDate)} – {formatTanggal(p.endDate)}</p>
+            <p className="font-label-md text-label-md text-outline dark:text-outline-variant">{formatTanggal(p.startDate)} – {formatTanggal(p.endDate)}</p>
           </div>
           <CardActions onEdit={edit} onRemove={remove} />
         </div>

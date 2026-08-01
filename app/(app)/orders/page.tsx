@@ -53,21 +53,21 @@ export default function OrdersPage() {
     <>
       <PageHeader title="Order" right={
         <button onClick={() => { setDraft(filters); setFilterOpen(true); }}
-          className="relative flex h-10 w-10 items-center justify-center rounded-full active:bg-slate-100 dark:active:bg-slate-800" aria-label="Filter">
-          <FunnelSimple size={20} weight={activeCount > 0 ? 'fill' : 'regular'} className={activeCount > 0 ? 'text-sky-600 dark:text-sky-400' : undefined} />
-          {activeCount > 0 && <span className="absolute -right-0.5 -top-0.5 flex h-5 w-5 items-center justify-center rounded-full bg-sky-500 text-[10px] font-bold text-white">{activeCount}</span>}
+          className="relative flex h-10 w-10 items-center justify-center rounded-full active:bg-surface-container-low dark:active:bg-white/5" aria-label="Filter">
+          <FunnelSimple size={20} weight={activeCount > 0 ? 'fill' : 'regular'} className={activeCount > 0 ? 'text-primary dark:text-inverse-primary' : undefined} />
+          {activeCount > 0 && <span className="absolute -right-0.5 -top-0.5 flex h-5 w-5 items-center justify-center rounded-full bg-primary font-label-md text-label-md font-bold text-on-primary">{activeCount}</span>}
         </button>
       } />
       <div className="glass-strong sticky top-[56px] z-30 px-4 py-2">
         <SearchInput value={search} onChange={setSearch} placeholder="Cari invoice / pelanggan…" />
         <div className="no-scrollbar -mx-4 mt-2 flex max-w-[calc(100%+2rem)] gap-2 overflow-x-auto overscroll-x-contain px-4 pb-0.5">
           <button onClick={() => setFilters({ ...filters, status: undefined })}
-            className={`min-h-[32px] shrink-0 rounded-full px-3 text-xs font-medium transition-colors ${!filters.status ? 'bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'}`}>
+            className={`min-h-[32px] shrink-0 rounded-full px-3 text-xs font-medium transition-colors ${!filters.status ? 'bg-on-surface text-inverse-on-surface dark:bg-inverse-on-surface dark:text-on-surface' : 'bg-surface-container dark:bg-white/10 text-on-surface-variant dark:text-outline-variant'}`}>
             Semua
           </button>
           {STATUSES.map((s) => (
             <button key={s} onClick={() => setFilters({ ...filters, status: filters.status === s ? undefined : s })}
-              className={`min-h-[32px] shrink-0 rounded-full px-3 text-xs font-medium transition-colors ${filters.status === s ? 'bg-sky-500 text-white shadow-sm shadow-sky-500/30' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'}`}>
+              className={`min-h-[32px] shrink-0 rounded-full px-3 text-xs font-medium transition-colors ${filters.status === s ? 'bg-primary text-on-primary' : 'bg-surface-container dark:bg-white/10 text-on-surface-variant dark:text-outline-variant'}`}>
               {STATUS_LABEL[s]}
             </button>
           ))}
@@ -77,23 +77,23 @@ export default function OrdersPage() {
       {query.isLoading ? <SkeletonList /> : (
         <div className="space-y-3 p-4">
           {(query.data?.pages || []).flatMap((p) => p.items).map((o) => (
-            <Link key={o.id} href={`/orders/${o.id}`} className="block rounded-2xl border border-slate-200/60 dark:border-slate-800 glass p-4 shadow-sm transition-transform duration-150 active:scale-[0.98]">
+            <Link key={o.id} href={`/orders/${o.id}`} className="block rounded-xl border border-border-subtle dark:border-outline-variant/20 glass p-md shadow-card transition-transform duration-150 active:scale-[0.98]">
               <div className="flex items-start justify-between gap-2">
                 <div>
                   <p className="text-sm font-bold">{o.invoiceNumber}</p>
-                  <p className="mt-0.5 text-sm text-slate-600 dark:text-slate-300">{o.customerName} · {o.branch?.name}</p>
+                  <p className="mt-0.5 font-body-md text-body-md text-on-surface-variant dark:text-outline-variant">{o.customerName} · {o.branch?.name}</p>
                 </div>
                 <span className={`shrink-0 rounded-full px-2.5 py-1 text-[11px] font-semibold ${STATUS_BADGE[o.status]}`}>{STATUS_LABEL[o.status]}</span>
               </div>
               <div className="mt-3 flex items-center justify-between text-sm">
-                <span className="text-slate-400 dark:text-slate-500">{formatRelatif(o.createdAt)}</span>
+                <span className="text-outline dark:text-outline-variant">{formatRelatif(o.createdAt)}</span>
                 <span className="font-bold tabular-nums">{formatRupiah(o.totalAmount)}</span>
               </div>
             </Link>
           ))}
           {!(query.data?.pages[0]?.items?.length) && <EmptyState icon={Basket} title="Belum ada order" description={activeCount || debounced ? 'Coba ubah kata kunci atau filter' : 'Order akan muncul di sini'} />}
           <div ref={sentinel} className="h-4" />
-          {query.isFetchingNextPage && <p className="flex items-center justify-center gap-1.5 py-2 text-center text-xs text-slate-400 dark:text-slate-500"><CircleNotch size={14} className="animate-spin" /> Memuat…</p>}
+          {query.isFetchingNextPage && <p className="flex items-center justify-center gap-1.5 py-2 text-center font-label-md text-label-md text-outline dark:text-outline-variant"><CircleNotch size={14} className="animate-spin" /> Memuat…</p>}
         </div>
       )}
 
@@ -102,7 +102,7 @@ export default function OrdersPage() {
           <div>
             <p className="mb-2 text-sm font-medium">Cabang</p>
             <select value={draft.branchId || ''} onChange={(e) => setDraft({ ...draft, branchId: e.target.value || undefined })}
-              className="min-h-[44px] w-full rounded-xl border border-slate-200 dark:border-slate-700 px-3 text-sm">
+              className="min-h-[44px] w-full rounded-md border border-border-subtle dark:border-outline-variant/25 bg-surface-container-lowest dark:bg-inverse-surface px-3 font-body-md text-body-md">
               <option value="">Semua cabang</option>
               {(branches?.items || []).map((b) => <option key={b.id} value={b.id}>{b.name}</option>)}
             </select>
@@ -112,7 +112,7 @@ export default function OrdersPage() {
             <div className="flex flex-wrap gap-2">
               {STATUSES.map((s) => (
                 <button key={s} onClick={() => setDraft({ ...draft, status: draft.status === s ? undefined : s })}
-                  className={`min-h-[36px] rounded-full px-3 text-xs font-medium ${draft.status === s ? 'bg-sky-600 text-white shadow-sm shadow-sky-600/30' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'}`}>
+                  className={`min-h-[36px] rounded-full px-3 text-xs font-medium ${draft.status === s ? 'bg-primary text-on-primary' : 'bg-surface-container dark:bg-white/10 text-on-surface-variant dark:text-outline-variant'}`}>
                   {STATUS_LABEL[s]}
                 </button>
               ))}
@@ -123,7 +123,7 @@ export default function OrdersPage() {
             <div className="flex flex-wrap gap-2">
               {PAYMENTS.map((p) => (
                 <button key={p} onClick={() => setDraft({ ...draft, paymentMethod: draft.paymentMethod === p ? undefined : p })}
-                  className={`min-h-[36px] rounded-full px-3 text-xs font-medium ${draft.paymentMethod === p ? 'bg-sky-600 text-white shadow-sm shadow-sky-600/30' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'}`}>
+                  className={`min-h-[36px] rounded-full px-3 text-xs font-medium ${draft.paymentMethod === p ? 'bg-primary text-on-primary' : 'bg-surface-container dark:bg-white/10 text-on-surface-variant dark:text-outline-variant'}`}>
                   {PAYMENT_LABEL[p]}
                 </button>
               ))}
@@ -133,19 +133,19 @@ export default function OrdersPage() {
             <div>
               <p className="mb-2 text-sm font-medium">Dari tanggal</p>
               <input type="date" value={draft.dateFrom || ''} onChange={(e) => setDraft({ ...draft, dateFrom: e.target.value || undefined })}
-                className="min-h-[44px] w-full rounded-xl border border-slate-200 dark:border-slate-700 px-3 text-sm" />
+                className="min-h-[44px] w-full rounded-md border border-border-subtle dark:border-outline-variant/25 bg-surface-container-lowest dark:bg-inverse-surface px-3 font-body-md text-body-md" />
             </div>
             <div>
               <p className="mb-2 text-sm font-medium">Sampai</p>
               <input type="date" value={draft.dateTo || ''} onChange={(e) => setDraft({ ...draft, dateTo: e.target.value || undefined })}
-                className="min-h-[44px] w-full rounded-xl border border-slate-200 dark:border-slate-700 px-3 text-sm" />
+                className="min-h-[44px] w-full rounded-md border border-border-subtle dark:border-outline-variant/25 bg-surface-container-lowest dark:bg-inverse-surface px-3 font-body-md text-body-md" />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-3 pt-1">
             <button onClick={() => { setDraft({}); setFilters({}); setFilterOpen(false); }}
-              className="min-h-[48px] rounded-xl border border-slate-200 dark:border-slate-700 font-medium">Reset</button>
+              className="min-h-[48px] rounded-md border border-border-subtle dark:border-outline-variant/25 font-medium">Reset</button>
             <button onClick={() => { setFilters(draft); setFilterOpen(false); }}
-              className="min-h-[48px] rounded-xl bg-sky-500 font-semibold text-white">Terapkan</button>
+              className="min-h-[48px] rounded-md bg-primary font-semibold text-on-primary">Terapkan</button>
           </div>
         </div>
       </BottomSheet>

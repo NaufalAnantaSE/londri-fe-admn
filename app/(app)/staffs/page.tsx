@@ -42,16 +42,16 @@ export default function StaffsPage() {
       }}
       fromItem={(s) => ({ fullName: s.fullName, username: s.username, password: '', branchId: s.branchId, roleId: s.roleId, phoneNumber: s.phoneNumber || '', address: s.address || '', isActive: s.isActive })}
       renderCard={(s, { edit, remove }) => (
-        <div className="flex items-start justify-between gap-2 rounded-2xl border border-slate-100 dark:border-slate-800 glass p-4 shadow-sm">
+        <div className="flex items-start justify-between gap-2 rounded-xl border border-border-subtle dark:border-outline-variant/20 glass p-md shadow-card">
           <div>
             <div className="flex items-center gap-2">
               <p className="font-semibold">{s.fullName}</p>
-              <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${s.isActive ? 'bg-emerald-50 dark:bg-emerald-950 text-emerald-600' : 'bg-slate-100 dark:bg-slate-950 text-slate-400 dark:text-slate-500'}`}>
+              <span className={`chip font-bold ${s.isActive ? 'chip-success' : 'chip-neutral'}`}>
                 {s.isActive ? 'AKTIF' : 'NONAKTIF'}
               </span>
             </div>
-            <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">@{s.username} · {s.role?.name}</p>
-            <p className="text-sm text-slate-400 dark:text-slate-500">{s.branch?.name}</p>
+            <p className="mt-1 font-body-md text-body-md text-on-surface-variant dark:text-outline-variant">@{s.username} · {s.role?.name}</p>
+            <p className="font-body-md text-body-md text-outline dark:text-outline-variant">{s.branch?.name}</p>
           </div>
           <CardActions onEdit={edit} onRemove={remove} />
         </div>

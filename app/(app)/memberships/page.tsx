@@ -47,9 +47,9 @@ export default function MembershipsPage() {
   return (
     <>
       <PageHeader title="Membership" right={
-        <button onClick={() => { setDraftStatus(status); setDraftTierId(tierId); setFilterOpen(true); }} className="relative flex h-10 w-10 items-center justify-center rounded-full active:bg-slate-100 dark:active:bg-slate-800" aria-label="Filter">
-          <FunnelSimple size={20} weight={activeCount > 0 ? 'fill' : 'regular'} className={activeCount > 0 ? 'text-sky-600 dark:text-sky-400' : undefined} />
-          {activeCount > 0 && <span className="absolute -right-0.5 -top-0.5 flex h-5 w-5 items-center justify-center rounded-full bg-sky-500 text-[10px] font-bold text-white">{activeCount}</span>}
+        <button onClick={() => { setDraftStatus(status); setDraftTierId(tierId); setFilterOpen(true); }} className="relative flex h-10 w-10 items-center justify-center rounded-full active:bg-surface-container-low dark:active:bg-white/5" aria-label="Filter">
+          <FunnelSimple size={20} weight={activeCount > 0 ? 'fill' : 'regular'} className={activeCount > 0 ? 'text-primary dark:text-inverse-primary' : undefined} />
+          {activeCount > 0 && <span className="absolute -right-0.5 -top-0.5 flex h-5 w-5 items-center justify-center rounded-full bg-primary font-label-md text-label-md font-bold text-on-primary">{activeCount}</span>}
         </button>
       } />
       <div className="glass-strong sticky top-[56px] z-30 px-4 py-2">
@@ -58,25 +58,25 @@ export default function MembershipsPage() {
       {query.isLoading ? <SkeletonList /> : (
         <div className="space-y-3 p-4">
           {(query.data?.pages || []).flatMap((p) => p.items).map((m) => (
-            <Link key={m.id} href={`/memberships/${m.id}`} className="block rounded-2xl border border-slate-200/60 dark:border-slate-800 glass p-4 shadow-sm transition-transform duration-150 active:scale-[0.98]">
+            <Link key={m.id} href={`/memberships/${m.id}`} className="block rounded-xl border border-border-subtle dark:border-outline-variant/20 glass p-md shadow-card transition-transform duration-150 active:scale-[0.98]">
               <div className="flex items-start justify-between gap-2">
                 <div>
                   <p className="font-semibold">{m.customerName}</p>
-                  <p className="mt-0.5 flex items-center gap-1 text-sm text-slate-500 dark:text-slate-400">
-                    {m.phoneNumber} · <Crown size={13} weight="fill" className="text-amber-500" />{m.tier?.name}
+                  <p className="mt-0.5 flex items-center gap-1 font-body-md text-body-md text-on-surface-variant dark:text-outline-variant">
+                    {m.phoneNumber} · <Crown size={13} weight="fill" className="text-warning" />{m.tier?.name}
                   </p>
                 </div>
                 <span className={`shrink-0 rounded-full px-2.5 py-1 text-[11px] font-semibold ${MEMBER_BADGE[m.status]}`}>{MEMBER_LABEL[m.status]}</span>
               </div>
               <div className="mt-3 flex items-center justify-between text-sm">
-                <span className="text-slate-400 dark:text-slate-500">Exp {formatTanggal(m.expiresAt)}</span>
-                <span className="font-semibold tabular-nums text-sky-600 dark:text-sky-400">{formatRupiah(m.balance)}</span>
+                <span className="text-outline dark:text-outline-variant">Exp {formatTanggal(m.expiresAt)}</span>
+                <span className="font-data-tabular text-data-tabular font-semibold tabular-nums text-primary dark:text-inverse-primary">{formatRupiah(m.balance)}</span>
               </div>
             </Link>
           ))}
           {!(query.data?.pages[0]?.items?.length) && <EmptyState icon={Crown} title="Belum ada member" description={activeCount || debounced ? 'Coba ubah kata kunci atau filter' : undefined} />}
           <div ref={sentinel} className="h-4" />
-          {query.isFetchingNextPage && <p className="flex items-center justify-center gap-1.5 py-2 text-center text-xs text-slate-400 dark:text-slate-500"><CircleNotch size={14} className="animate-spin" /> Memuat…</p>}
+          {query.isFetchingNextPage && <p className="flex items-center justify-center gap-1.5 py-2 text-center font-label-md text-label-md text-outline dark:text-outline-variant"><CircleNotch size={14} className="animate-spin" /> Memuat…</p>}
         </div>
       )}
       <BottomSheet open={filterOpen} onClose={() => setFilterOpen(false)} title="Filter Member">
@@ -86,7 +86,7 @@ export default function MembershipsPage() {
             <div className="flex gap-2">
               {(['ACTIVE', 'EXPIRED', 'BLOCKED'] as MembershipStatus[]).map((s) => (
                 <button key={s} onClick={() => setDraftStatus(draftStatus === s ? undefined : s)}
-                  className={`min-h-[36px] flex-1 rounded-full text-xs font-medium ${draftStatus === s ? 'bg-sky-600 text-white shadow-sm shadow-sky-600/30' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'}`}>
+                  className={`min-h-[36px] flex-1 rounded-full text-xs font-medium ${draftStatus === s ? 'bg-primary text-on-primary' : 'bg-surface-container dark:bg-white/10 text-on-surface-variant dark:text-outline-variant'}`}>
                   {MEMBER_LABEL[s]}
                 </button>
               ))}
@@ -94,16 +94,16 @@ export default function MembershipsPage() {
           </div>
           <div>
             <p className="mb-2 text-sm font-medium">Tier</p>
-            <select value={draftTierId} onChange={(e) => setDraftTierId(e.target.value)} className="min-h-[44px] w-full rounded-xl border border-slate-200 dark:border-slate-700 px-3 text-sm">
+            <select value={draftTierId} onChange={(e) => setDraftTierId(e.target.value)} className="min-h-[44px] w-full rounded-md border border-border-subtle dark:border-outline-variant/25 bg-surface-container-lowest dark:bg-inverse-surface px-3 font-body-md text-body-md">
               <option value="">Semua tier</option>
               {(tiers?.items || []).map((t) => <option key={t.id} value={t.id}>{t.name}</option>)}
             </select>
           </div>
           <div className="grid grid-cols-2 gap-3 pt-1">
             <button onClick={() => { setDraftStatus(undefined); setDraftTierId(''); setStatus(undefined); setTierId(''); setFilterOpen(false); }}
-              className="min-h-[48px] rounded-xl border border-slate-200 dark:border-slate-700 font-medium">Reset</button>
+              className="min-h-[48px] rounded-md border border-border-subtle dark:border-outline-variant/25 font-medium">Reset</button>
             <button onClick={() => { setStatus(draftStatus); setTierId(draftTierId); setFilterOpen(false); }}
-              className="min-h-[48px] rounded-xl bg-sky-500 font-semibold text-white">Terapkan</button>
+              className="min-h-[48px] rounded-md bg-primary font-semibold text-on-primary">Terapkan</button>
           </div>
         </div>
       </BottomSheet>

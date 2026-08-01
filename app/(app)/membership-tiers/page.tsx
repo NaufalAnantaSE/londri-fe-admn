@@ -27,11 +27,11 @@ export default function MembershipTiersPage() {
       toPayload={(f) => ({ name: f.name, purchasePrice: Number(f.purchasePrice), balanceAmount: Number(f.balanceAmount), validityDays: Number(f.validityDays), description: f.description || null })}
       fromItem={(t) => ({ name: t.name, purchasePrice: t.purchasePrice, balanceAmount: t.balanceAmount, validityDays: String(t.validityDays), description: t.description || '' })}
       renderCard={(t, { edit, remove }) => (
-        <div className="flex items-start justify-between gap-2 rounded-2xl border border-slate-100 dark:border-slate-800 glass p-4 shadow-sm">
+        <div className="flex items-start justify-between gap-2 rounded-xl border border-border-subtle dark:border-outline-variant/20 glass p-md shadow-card">
           <div>
             <p className="font-semibold">{t.name}</p>
-            <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">Beli {formatRupiah(t.purchasePrice)} → saldo {formatRupiah(t.balanceAmount)}</p>
-            <p className="text-xs text-slate-400 dark:text-slate-500">Berlaku {t.validityDays} hari</p>
+            <p className="mt-1 font-body-md text-body-md text-on-surface-variant dark:text-outline-variant">Beli {formatRupiah(t.purchasePrice)} → saldo {formatRupiah(t.balanceAmount)}</p>
+            <p className="font-label-md text-label-md text-outline dark:text-outline-variant">Berlaku {t.validityDays} hari</p>
           </div>
           <CardActions onEdit={edit} onRemove={remove} />
         </div>

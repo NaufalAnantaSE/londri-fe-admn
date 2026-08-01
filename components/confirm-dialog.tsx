@@ -9,11 +9,11 @@ export default function ConfirmDialog({ open, title, message, loading, onCancel,
       <div className="animate-fade-in absolute inset-0 bg-black/40" onClick={onCancel} />
       <div className="animate-dialog-in glass-strong relative w-full rounded-3xl p-6 shadow-xl">
         <h3 className="text-base font-semibold">{title}</h3>
-        {message && <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">{message}</p>}
+        {message && <p className="mt-2 font-body-md text-body-md text-on-surface-variant dark:text-outline-variant">{message}</p>}
         <div className="mt-6 grid grid-cols-2 gap-3">
-          <button onClick={onCancel} className="min-h-[44px] rounded-xl border border-slate-200 dark:border-slate-700 font-medium active:bg-slate-50 dark:active:bg-slate-800">Batal</button>
+          <button onClick={onCancel} className="min-h-[44px] rounded-md border border-border-subtle dark:border-outline-variant/25 font-medium active:bg-surface-container-low dark:active:bg-white/5">Batal</button>
           <button onClick={onConfirm} disabled={loading}
-            className="min-h-[44px] rounded-xl bg-red-500 font-medium text-white active:bg-red-600 disabled:opacity-50">
+            className="min-h-[44px] rounded-md bg-error font-medium text-on-error transition-colors active:bg-on-error-container disabled:opacity-50">
             {loading ? 'Menghapus…' : 'Hapus'}
           </button>
         </div>

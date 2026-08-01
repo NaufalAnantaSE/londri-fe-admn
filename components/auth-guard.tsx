@@ -22,7 +22,7 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
   if (!hydrated || !token || isTokenExpired(token)) {
     return (
       <div className="flex min-h-[100dvh] items-center justify-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-slate-200 dark:border-slate-700 border-t-sky-500" />
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-border-subtle dark:border-outline-variant/20 border-t-primary" />
       </div>
     );
   }

@@ -120,8 +120,8 @@ export default function CrudPage<T extends { id: string }>(props: CrudPageProps<
                 </select>
               ) : f.type === 'switch' ? (
                 <button type="button" onClick={() => setForm({ ...form, [f.name]: !form[f.name] })}
-                  className={`relative h-8 w-14 rounded-full transition-colors ${form[f.name] ? 'bg-emerald-500' : 'bg-slate-300'}`}>
-                  <span className={`absolute top-1 h-6 w-6 rounded-full bg-white dark:bg-slate-900 transition-[left] ${form[f.name] ? 'left-7' : 'left-1'}`} />
+                  className={`relative h-8 w-14 rounded-full transition-colors ${form[f.name] ? 'bg-success' : 'bg-surface-container-high'}`}>
+                  <span className={`absolute top-1 h-6 w-6 rounded-full bg-surface-container-lowest shadow-card transition-[left] ${form[f.name] ? 'left-7' : 'left-1'}`} />
                 </button>
               ) : (
                 <input type={f.type || 'text'} value={String(form[f.name] ?? '')} placeholder={f.placeholder}
@@ -130,7 +130,7 @@ export default function CrudPage<T extends { id: string }>(props: CrudPageProps<
             </Field>
           ))}
           <button onClick={submit} disabled={save.isPending}
-            className="min-h-[48px] w-full rounded-xl bg-sky-500 font-semibold text-white active:bg-sky-600 disabled:opacity-50">
+            className="min-h-[48px] w-full rounded-md bg-primary font-body-lg text-body-lg font-semibold text-on-primary transition-colors active:bg-on-primary-container disabled:opacity-50">
             {save.isPending ? 'Menyimpan…' : 'Simpan'}
           </button>
         </div>
