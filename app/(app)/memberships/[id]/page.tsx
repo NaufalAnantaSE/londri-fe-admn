@@ -64,7 +64,7 @@ export default function MembershipDetailPage({ params }: { params: { id: string 
             </section>
           )}
           {tab === 'balance' && (
-            balanceLogs.isLoading ? <SkeletonList count={3} /> : (
+            balanceLogs.isLoading ? <SkeletonList rows={3} /> : (
               <div className="space-y-2">
                 {balanceLogs.data?.map((l) => (
                   <div key={l.id} className="rounded-xl border border-border-subtle dark:border-outline-variant/20 glass p-md shadow-card">
@@ -86,7 +86,7 @@ export default function MembershipDetailPage({ params }: { params: { id: string 
             )
           )}
           {tab === 'transaksi' && (
-            transactions.isLoading ? <SkeletonList count={3} /> : (
+            transactions.isLoading ? <SkeletonList rows={3} /> : (
               <div className="space-y-2">
                 {transactions.data?.map((t) => (
                   <div key={t.id} className="rounded-xl border border-border-subtle dark:border-outline-variant/20 glass p-md shadow-card">

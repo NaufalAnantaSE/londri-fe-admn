@@ -102,7 +102,7 @@ export default function CrudPage<T extends { id: string }>(props: CrudPageProps<
             </div>
           ))}
         </div>
-      ) : <EmptyState icon={Package} title={`Belum ada ${props.title.toLowerCase()}`} description="Tekan tombol + untuk menambah" />}
+      ) : <EmptyState icon={Package} title={`Belum ada ${props.title.toLowerCase()}`} desc="Tekan tombol + untuk menambah" />}
 
       <Fab onClick={openCreate} />
 

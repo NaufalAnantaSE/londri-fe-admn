@@ -29,7 +29,7 @@ export default function BranchesPage() {
               <p className="mt-1 font-body-md text-body-md text-on-surface-variant dark:text-outline-variant">{b.address}</p>
               <p className="mt-1 font-body-md text-body-md text-outline dark:text-outline-variant">{b.phoneNumber}</p>
             </div>
-            <CardActions onEdit={edit} onRemove={remove} />
+            <CardActions onEdit={edit} onDelete={remove} />
           </div>
         </div>
       )}

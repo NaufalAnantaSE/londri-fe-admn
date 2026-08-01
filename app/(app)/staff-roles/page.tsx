@@ -20,7 +20,7 @@ export default function StaffRolesPage() {
             <p className="font-semibold">{r.name}</p>
             <p className="mt-1 font-body-md text-body-md text-outline dark:text-outline-variant">{r.description || '—'}</p>
           </div>
-          <CardActions onEdit={edit} onRemove={remove} />
+          <CardActions onEdit={edit} onDelete={remove} />
         </div>
       )}
     />

@@ -74,7 +74,7 @@ export default function MembershipsPage() {
               </div>
             </Link>
           ))}
-          {!(query.data?.pages[0]?.items?.length) && <EmptyState icon={Crown} title="Belum ada member" description={activeCount || debounced ? 'Coba ubah kata kunci atau filter' : undefined} />}
+          {!(query.data?.pages[0]?.items?.length) && <EmptyState icon={Crown} title="Belum ada member" desc={activeCount || debounced ? 'Coba ubah kata kunci atau filter' : undefined} />}
           <div ref={sentinel} className="h-4" />
           {query.isFetchingNextPage && <p className="flex items-center justify-center gap-1.5 py-2 text-center font-label-md text-label-md text-outline dark:text-outline-variant"><CircleNotch size={14} className="animate-spin" /> Memuat…</p>}
         </div>

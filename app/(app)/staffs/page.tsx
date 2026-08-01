@@ -53,7 +53,7 @@ export default function StaffsPage() {
             <p className="mt-1 font-body-md text-body-md text-on-surface-variant dark:text-outline-variant">@{s.username} · {s.role?.name}</p>
             <p className="font-body-md text-body-md text-outline dark:text-outline-variant">{s.branch?.name}</p>
           </div>
-          <CardActions onEdit={edit} onRemove={remove} />
+          <CardActions onEdit={edit} onDelete={remove} />
         </div>
       )}
     />

@@ -26,7 +26,7 @@ export default function OrderDetailPage({ params }: { params: { id: string } }) 
     onError: (e) => toast.error(apiMessage(e)),
   });
 
-  if (isLoading || !order) return <><PageHeader title="Detail Order" back /><SkeletonList count={5} /></>;
+  if (isLoading || !order) return <><PageHeader title="Detail Order" back /><SkeletonList rows={5} /></>;
   const currentIdx = ORDER_FLOW.indexOf(order.status);
   const isTerminal = order.status === 'COMPLETED' || order.status === 'CANCELLED';
   const nextOptions = !isTerminal ? [ORDER_FLOW[currentIdx + 1], 'CANCELLED' as OrderStatus].filter(Boolean) : [];

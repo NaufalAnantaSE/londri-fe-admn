@@ -77,21 +77,26 @@ export default function OrdersPage() {
       {query.isLoading ? <SkeletonList /> : (
         <div className="space-y-3 p-4">
           {(query.data?.pages || []).flatMap((p) => p.items).map((o) => (
-            <Link key={o.id} href={`/orders/${o.id}`} className="block rounded-xl border border-border-subtle dark:border-outline-variant/20 glass p-md shadow-card transition-transform duration-150 active:scale-[0.98]">
-              <div className="flex items-start justify-between gap-2">
-                <div>
-                  <p className="text-sm font-bold">{o.invoiceNumber}</p>
-                  <p className="mt-0.5 font-body-md text-body-md text-on-surface-variant dark:text-outline-variant">{o.customerName} · {o.branch?.name}</p>
-                </div>
-                <span className={`shrink-0 rounded-full px-2.5 py-1 text-[11px] font-semibold ${STATUS_BADGE[o.status]}`}>{STATUS_LABEL[o.status]}</span>
+            <Link key={o.id} href={`/orders/${o.id}`} className="block overflow-hidden rounded-xl border border-border-subtle dark:border-outline-variant/20 shadow-card transition-transform duration-150 active:scale-[0.98]">
+              <div className="flex items-center justify-between border-b border-border-subtle dark:border-outline-variant/20 bg-surface-container-low dark:bg-white/5 px-md py-2.5">
+                <span className="font-data-tabular text-data-tabular font-semibold text-on-surface dark:text-inverse-on-surface">{o.invoiceNumber}</span>
+                <span className={`rounded-md px-2 py-0.5 font-label-md text-label-md ${STATUS_BADGE[o.status]}`}>{STATUS_LABEL[o.status]}</span>
               </div>
-              <div className="mt-3 flex items-center justify-between text-sm">
-                <span className="text-outline dark:text-outline-variant">{formatRelatif(o.createdAt)}</span>
-                <span className="font-bold tabular-nums">{formatRupiah(o.totalAmount)}</span>
+              <div className="p-md">
+                <div className="flex items-start justify-between gap-2">
+                  <div>
+                    <h3 className="font-body-lg text-body-lg font-medium text-on-surface dark:text-inverse-on-surface">{o.customerName}</h3>
+                    <p className="mt-0.5 font-body-md text-body-md text-secondary dark:text-outline-variant">{o.branch?.name}</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="font-data-tabular text-data-tabular font-semibold text-on-surface dark:text-inverse-on-surface">{formatRupiah(o.totalAmount)}</p>
+                    <p className="font-label-md text-label-md text-outline dark:text-outline-variant">{formatRelatif(o.createdAt)}</p>
+                  </div>
+                </div>
               </div>
             </Link>
           ))}
-          {!(query.data?.pages[0]?.items?.length) && <EmptyState icon={Basket} title="Belum ada order" description={activeCount || debounced ? 'Coba ubah kata kunci atau filter' : 'Order akan muncul di sini'} />}
+          {!(query.data?.pages[0]?.items?.length) && <EmptyState icon={Basket} title="Belum ada order" desc={activeCount || debounced ? 'Coba ubah kata kunci atau filter' : 'Order akan muncul di sini'} />}
           <div ref={sentinel} className="h-4" />
           {query.isFetchingNextPage && <p className="flex items-center justify-center gap-1.5 py-2 text-center font-label-md text-label-md text-outline dark:text-outline-variant"><CircleNotch size={14} className="animate-spin" /> Memuat…</p>}
         </div>

@@ -37,7 +37,7 @@ export default function ServicesPage() {
             <p className="mt-1 font-body-md text-body-md text-on-surface-variant dark:text-outline-variant">{formatRupiah(s.price)} · {s.type}</p>
             <p className="font-label-md text-label-md text-outline dark:text-outline-variant">Estimasi {s.estimatedHours} jam</p>
           </div>
-          <CardActions onEdit={edit} onRemove={remove} />
+          <CardActions onEdit={edit} onDelete={remove} />
         </div>
       )}
     />

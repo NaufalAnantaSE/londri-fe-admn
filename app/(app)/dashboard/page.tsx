@@ -6,7 +6,7 @@ import { formatRupiah, formatBulan } from '@/lib/utils';
 import PageHeader from '@/components/page-header';
 import SkeletonList from '@/components/skeleton-list';
 import { useTheme } from '@/lib/theme';
-import { CalendarCheck, ListChecks, Users } from '@phosphor-icons/react';
+import { CalendarCheck, ListChecks, Users, ShoppingCart, ChartBar, QrCode } from '@phosphor-icons/react';
 import dynamic from 'next/dynamic';
 
 // Dynamic import Recharts — huge chunk (~100KB), only needed on this page
@@ -26,20 +26,6 @@ const Cell = dynamic(() => import('recharts').then(m => m.Cell), { ssr: false })
    palet (198 → 220 → hijau/kuning status) alih-alih pelangi acak. */
 const COLORS = ['#006591', '#505f76', '#047857', '#b45309', '#89ceff'];
 
-/* Avatar kasir: pembeda identitas, bukan tingkatan. Memakai container tonal
-   dari palet supaya tetap terbedakan tanpa memasukkan hue asing. */
-const AVATAR_COLORS = [
-  'bg-primary-container text-on-primary-container',
-  'bg-secondary-container text-on-secondary-container',
-  'bg-success-container text-on-success-container',
-  'bg-warning-container text-on-warning-container',
-  'bg-tertiary-fixed text-on-tertiary-fixed',
-];
-
-function inisial(name: string) {
-  return name.split(' ').filter(Boolean).slice(0, 2).map((w) => w[0].toUpperCase()).join('');
-}
-
 function sapaan() {
   const h = new Date().getHours();
   if (h < 11) return 'Selamat pagi';
@@ -58,7 +44,7 @@ export default function DashboardPage() {
     { queryKey: ['dashboard-sales'], queryFn: dashboardApi.membershipSales },
     { queryKey: ['dashboard-promos'], queryFn: dashboardApi.mostUsedPromotions },
   ]});
-  if (summary.isLoading) return <><PageHeader title="Dashboard" /><SkeletonList count={5} /></>;
+  if (summary.isLoading) return <><PageHeader title="Dashboard" /><SkeletonList rows={5} /></>;
   const d = summary.data;
   const today = new Intl.DateTimeFormat('id-ID', { dateStyle: 'full' }).format(new Date());
   const smallCards = [
@@ -91,6 +77,23 @@ export default function DashboardPage() {
           <p className="mt-1 font-display text-display tabular-nums text-on-primary">{formatRupiah(d?.revenue.daily.amount)}</p>
           <p className="mt-1 font-label-md text-label-md text-on-primary/70">{d?.revenue.daily.count ?? 0} transaksi selesai hari ini</p>
         </section>
+
+        {/* Quick Actions — dari Stitch reference */}
+        <div className="grid grid-cols-3 gap-3">
+          {[
+            { label: 'Buat Order', Icon: ShoppingCart, href: '/orders' },
+            { label: 'Laporan', Icon: ChartBar, href: '/reports' },
+            { label: 'Scan QR', Icon: QrCode, href: '/attendance/qr' },
+          ].map((a) => (
+            <Link key={a.label} href={a.href}
+              className="flex flex-col items-center gap-2 rounded-xl border border-border-subtle dark:border-outline-variant/20 bg-surface-container-lowest dark:bg-inverse-surface p-4 shadow-card transition-colors active:bg-surface-container-low dark:active:bg-white/5">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary-container/10 text-primary">
+                <a.Icon size={20} weight="duotone" />
+              </div>
+              <span className="font-label-md text-label-md text-on-surface dark:text-inverse-on-surface">{a.label}</span>
+            </Link>
+          ))}
+        </div>
 
         {/* Tiga metrik kecil */}
         <div className="grid grid-cols-3 gap-3">
@@ -126,21 +129,27 @@ export default function DashboardPage() {
           ) : <p className="py-12 text-center font-body-md text-body-md text-outline">Belum ada data revenue</p>}
         </section>
 
-        <section className="rounded-xl border border-border-subtle dark:border-outline-variant/20 glass p-md shadow-card">
-          <h2 className="mb-4 font-headline-md text-headline-md text-on-surface dark:text-inverse-on-surface">Revenue per kasir</h2>
-          <div className="space-y-3.5">
-            {(cashiers.data || []).slice(0, 5).map((x, i) => (
-              <div key={x.staffId} className="flex items-center gap-3">
-                <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-xs font-bold ${AVATAR_COLORS[i % AVATAR_COLORS.length]}`}>
-                  {inisial(x.fullName)}
-                </span>
-                <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-bold">{x.fullName}</p>
-                  <p className="font-label-md text-label-md text-outline dark:text-outline-variant">{x.orderCount} order selesai</p>
+        <section className="overflow-hidden rounded-xl border border-border-subtle dark:border-outline-variant/20 shadow-card">
+          <div className="border-b border-border-subtle dark:border-outline-variant/20 bg-surface-container-low dark:bg-white/5 px-md py-3">
+            <h2 className="font-headline-md text-headline-md text-on-surface dark:text-inverse-on-surface">Revenue per kasir</h2>
+          </div>
+          <div className="space-y-4 p-md">
+            {(cashiers.data || []).slice(0, 5).map((x, i, arr) => {
+              const maxRev = Number(arr[0].totalRevenue) || 1;
+              const pct = Math.round((Number(x.totalRevenue) / maxRev) * 100);
+              const barColor = i === 0 ? 'bg-primary' : i === 1 ? 'bg-primary-container' : 'bg-secondary-fixed-dim';
+              return (
+                <div key={x.staffId}>
+                  <div className="mb-1 flex items-center justify-between font-body-md text-body-md">
+                    <span className="font-medium text-on-surface dark:text-inverse-on-surface">{x.fullName}</span>
+                    <span className="font-data-tabular text-data-tabular tabular-nums">{formatRupiah(x.totalRevenue)}</span>
+                  </div>
+                  <div className="h-2 w-full overflow-hidden rounded-full bg-surface-container dark:bg-white/10">
+                    <div className={`h-full rounded-full ${barColor}`} style={{ width: `${pct}%` }} />
+                  </div>
                 </div>
-                <b className="shrink-0 text-sm tabular-nums">{formatRupiah(x.totalRevenue)}</b>
-              </div>
-            ))}
+              );
+            })}
             {!cashiers.data?.length && <p className="font-body-md text-body-md text-outline">Belum ada data kasir</p>}
           </div>
         </section>

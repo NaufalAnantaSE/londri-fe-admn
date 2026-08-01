@@ -56,7 +56,7 @@ export default function PromotionsPage() {
             </p>
             <p className="font-label-md text-label-md text-outline dark:text-outline-variant">{formatTanggal(p.startDate)} – {formatTanggal(p.endDate)}</p>
           </div>
-          <CardActions onEdit={edit} onRemove={remove} />
+          <CardActions onEdit={edit} onDelete={remove} />
         </div>
       )}
     />
