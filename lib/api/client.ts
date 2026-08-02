@@ -1,7 +1,24 @@
 import axios from 'axios';
 
+/**
+ * Normalisasi base URL API.
+ * Kalau env di-set tanpa skema (mis. "londri-be-beryl.vercel.app/api/v1"),
+ * axios menganggapnya path relatif sehingga request nyasar ke
+ * https://<domain-frontend>/londri-be-beryl.vercel.app/... dan balas 404.
+ * Fungsi ini memaksa https:// untuk host non-localhost.
+ */
+function normalizeBaseUrl(raw?: string): string {
+  const v = (raw || '').trim().replace(/\/+$/, '');
+  if (!v) return 'http://localhost:3000/api/v1';
+  if (/^https?:\/\//i.test(v)) return v;
+  if (/^(localhost|127\.0\.0\.1)(:\d+)?(\/|$)/i.test(v)) return `http://${v}`;
+  return `https://${v}`;
+}
+
+export const API_BASE_URL = normalizeBaseUrl(process.env.NEXT_PUBLIC_API_BASE_URL);
+
 export const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3000/api/v1',
+  baseURL: API_BASE_URL,
   headers: { 'Content-Type': 'application/json' },
 });
 
